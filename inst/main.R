@@ -1,3 +1,3 @@
 devtools::load_all()
 
-startApplication()
+startApplication(launch.browser = TRUE)
