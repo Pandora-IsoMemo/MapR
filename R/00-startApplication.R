@@ -12,5 +12,6 @@ startApplication <- function(port = getOption("shiny.port"),
     system.file("app", package = "MapR"),
     port = port,
     host = host,
-    launch.browser = launch.browser)
+    launch.browser = launch.browser
+  )
 }

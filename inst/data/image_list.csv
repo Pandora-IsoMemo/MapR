@@ -1,0 +1,10 @@
+Group_code,Group_name,Variable,Unit,Measure,Extension,Directory_location
+1,Forest cover,Forest cover,Density,Mean,tiff,dir1/forest_cover/mean
+1,Forest cover,Forest cover,Density,Error,tiff,dir1/forest_cover/error
+2,World climate,Humidity,Percent age,Average,jpg,dir2/humidty/average
+2,World climate,Temperature,Celsius,Average,jpg,dir2/temperature/average
+2,World climate,Precipitation,mm,Average,jpg,dir2/precipitation/average
+3,Europe temp.,Temperature,Celsius,Mean,tiff,dir3/europe_temperature/mean
+3,Europe temp.,Temperature,Celsius,Error,tiff,dir3/europe_temperature/error
+4,Asia climate,Temperature,Celsius,Average,ntcdf,dir4/asia_climate/average
+4,Asia climate,Temperature,Celsius,Error,ntcdf,dir4/asia_climate/error

@@ -9,10 +9,11 @@ tagList(
     id = "tab",
     tabPanel(
       title = "Map",
-      mapPanelUI(id = "mapPanel")
+      mapPanelUI(id = "map_panel")
     )
   ),
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
-)
+),
+shinyjs::useShinyjs()
 )
