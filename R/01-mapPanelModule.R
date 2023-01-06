@@ -28,15 +28,29 @@ mapPanelUI <- function(id) {
         align = "center",
         radioButtonsUI(
           id = ns("time_switch"),
-          choices = c(
-            "Single Map",
-            "Time plot"
+          choices = setNames(
+            c(1, 2),
+            c(
+              "Single Map",
+              "Time plot"
+            )
           )
         )
       ),
+      # slider years are currently hardcoded and will be replaced later
       sliderInputUI(
         id = ns("time"),
-        label = "Time"
+        label = "Time",
+        value = 2015
+      ),
+      # note: it is not possible to update a single value slider to range slider
+      # therefore we create two different sliders and toggle them based on the time_switch selection
+      shinyjs::hidden(
+        sliderInputUI(
+          id = ns("time_range"),
+          label = "Time",
+          value = c(2015, 2017)
+        )
       ),
       br(),
       fluidRow(
@@ -69,16 +83,19 @@ mapPanelServer <- function(id) {
         if (!is.null(input[["group_name-selectize"]])) {
           choices <- image_list$Variable[image_list$Group_name == input[["group_name-selectize"]]]
         } else {
-          choices <- NULL
+          choices <- ""
         }
         updateSelectizeInput(
           session = session,
           inputId = "variable-selectize",
           choices = choices,
-          selected = NULL
+          selected = ""
         )
       }) %>%
-        bindEvent(input[["group_name-selectize"]])
+        bindEvent(input[["group_name-selectize"]],
+          ignoreNULL = FALSE,
+          ignoreInit = TRUE
+        )
 
       # fill measure input
       observe({
@@ -86,17 +103,43 @@ mapPanelServer <- function(id) {
           choices <- image_list$Measure[image_list$Group_name == input[["group_name-selectize"]] &
             image_list$Variable == input[["variable-selectize"]]]
         } else {
-          choices <- NULL
+          choices <- ""
         }
         updateSelectizeInput(
           session = session,
           inputId = "measure-selectize",
           choices = choices,
-          selected = NULL
+          selected = ""
         )
       }) %>%
-        bindEvent(input[["variable-selectize"]])
+        bindEvent(input[["variable-selectize"]],
+          ignoreNULL = FALSE,
+          ignoreInit = TRUE
+        )
 
+      # update slider
+      observe({
+        if (input[["time_switch-buttons"]] == 1) {
+          shinyjs::hide(id = "time_range-slider")
+          shinyjs::show(
+            id = "time-slider",
+            anim = TRUE,
+            animType = "fade",
+            time = 1
+          )
+        } else {
+          shinyjs::hide(id = "time-slider")
+          shinyjs::show(
+            id = "time_range-slider",
+            anim = TRUE,
+            animType = "fade",
+            time = 1
+          )
+        }
+      }) %>%
+        bindEvent(input[["time_switch-buttons"]],
+          ignoreInit = TRUE
+        )
 
       # enable / disable actionButton
       observe({

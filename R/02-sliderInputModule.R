@@ -11,7 +11,7 @@ sliderInputUI <- function(id, label, ...) {
     label = label,
     min = 2010,
     max = 2020,
-    value = 2015,
-    sep = ""
+    sep = "",
+    ...
   )
 }
