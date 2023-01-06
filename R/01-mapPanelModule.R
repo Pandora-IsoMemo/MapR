@@ -2,6 +2,8 @@
 #'
 #' @param id module id
 #'
+#' @importFrom stats setNames
+#'
 mapPanelUI <- function(id) {
   ns <- NS(id)
   sidebarLayout(

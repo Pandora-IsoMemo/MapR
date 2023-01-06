@@ -10,6 +10,7 @@ radioButtonsUI <- function(id, choices, ...) {
     inputId = ns("buttons"),
     label = NULL,
     choices = choices,
-    inline = TRUE
+    inline = TRUE,
+    ...
   )
 }

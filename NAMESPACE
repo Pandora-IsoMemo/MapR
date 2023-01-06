@@ -3,3 +3,4 @@
 export("%>%")
 export(startApplication)
 importFrom(magrittr,"%>%")
+importFrom(stats,setNames)

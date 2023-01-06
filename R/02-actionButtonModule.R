@@ -7,6 +7,7 @@ actionButtonUI <- function(id, label, ...) {
   ns <- NS(id)
   shinyjs::disabled(actionButton(
     inputId = ns("button"),
-    label = label
+    label = label,
+    ...
   ))
 }

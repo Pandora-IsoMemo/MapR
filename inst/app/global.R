@@ -1,1 +1,1 @@
-image_list <- read.csv("../data/image_list.csv")
+image_list <- read.csv("../app_data/image_list.csv")
