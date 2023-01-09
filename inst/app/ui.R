@@ -2,7 +2,7 @@ library(shiny)
 
 tagList(
   navbarPage(
-    title = "MapR",
+    title = paste("MapR", packageVersion("MapR")),
     theme = shinythemes::shinytheme("flatly"),
     position = "fixed-top",
     collapsible = TRUE,
