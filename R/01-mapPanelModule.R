@@ -12,7 +12,7 @@ mapPanelUI <- function(id) {
       selectizeInputUI(
         id = ns("group_name"),
         label = "Group Name",
-        choices = unique(image_list$Group_name),
+        choices = unique(image_list$Group),
         selected = NULL
       ),
       selectizeInputUI(
@@ -83,7 +83,7 @@ mapPanelServer <- function(id) {
       # fill variable input
       observe({
         if (!is.null(input[["group_name-selectize"]])) {
-          choices <- image_list$Variable[image_list$Group_name == input[["group_name-selectize"]]]
+          choices <- image_list$Variable[image_list$Group == input[["group_name-selectize"]]]
         } else {
           choices <- ""
         }
@@ -102,7 +102,7 @@ mapPanelServer <- function(id) {
       # fill measure input
       observe({
         if (!is.null(input[["variable-selectize"]])) {
-          choices <- image_list$Measure[image_list$Group_name == input[["group_name-selectize"]] &
+          choices <- image_list$Measure[image_list$Group == input[["group_name-selectize"]] &
             image_list$Variable == input[["variable-selectize"]]]
         } else {
           choices <- ""

@@ -1,6 +1,6 @@
 Package: MapR
 Title: Display temporal and temperature graphical files for Isomemo
-Version: 22.12.1
+Version: 23.10.0
 Authors@R: c(person("Lukas", "Fuchs", email = "lukas.fuchs@inwt-statistics.de", role = c("aut", "cre")))
 Description: An App to display temporal and temperature graphical files for Isomemo.
 License: GPL (>= 3)
@@ -9,5 +9,6 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Imports: 
     magrittr,
+    rjson,
     shiny,
     shinyjs
