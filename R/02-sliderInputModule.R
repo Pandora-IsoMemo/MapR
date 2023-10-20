@@ -6,12 +6,11 @@
 #'
 sliderInputUI <- function(id, label, ...) {
   ns <- NS(id)
-  sliderInput(
+  shinyWidgets::sliderTextInput(
     inputId = ns("slider"),
     label = label,
-    min = 2010,
-    max = 2020,
-    sep = "",
+    choices = c(2010:2020),
+    grid = TRUE,
     ...
   )
 }

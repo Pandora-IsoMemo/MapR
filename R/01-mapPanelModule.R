@@ -9,6 +9,7 @@ mapPanelUI <- function(id) {
   sidebarLayout(
     sidebarPanel(
       width = 2,
+      fileInput("file", "Upload zip file", accept = ".zip"),
       selectizeInputUI(
         id = ns("group_name"),
         label = "Group Name",
@@ -43,7 +44,7 @@ mapPanelUI <- function(id) {
       sliderInputUI(
         id = ns("time"),
         label = "Time",
-        value = 2015
+        selected = 2015
       ),
       # note: it is not possible to update a single value slider to range slider
       # therefore we create two different sliders and toggle them based on the time_switch selection
@@ -51,7 +52,7 @@ mapPanelUI <- function(id) {
         sliderInputUI(
           id = ns("time_range"),
           label = "Time",
-          value = c(2015, 2017)
+          selected = c(2015, 2017)
         )
       ),
       br(),
@@ -66,7 +67,7 @@ mapPanelUI <- function(id) {
       )
     ),
     mainPanel(
-      tags$h3("map placeholder")
+      plotUI(id = ns("mainplot"))
     )
   )
 }
@@ -80,6 +81,15 @@ mapPanelServer <- function(id) {
   moduleServer(
     id,
     function(input, output, session) {
+      # load zip file
+      observe({
+        # if(is.null(input$file))
+      browser()
+      }) %>% bindEvent(input[["file"]],
+        ignoreNULL = FALSE,
+        ignoreInit = TRUE
+      )
+
       # fill variable input
       observe({
         if (!is.null(input[["group_name-selectize"]])) {
@@ -119,6 +129,34 @@ mapPanelServer <- function(id) {
           ignoreInit = TRUE
         )
 
+      # update time sliders
+      observe({
+        if (!is.null(input[["measure-selectize"]])) {
+          choices <- as.numeric(unlist(image_list$x_display_value[image_list$Group == input[["group_name-selectize"]] &
+            image_list$Variable == input[["variable-selectize"]] &
+            image_list$Measure == input[["measure-selectize"]]]))
+
+          if (length(choices) == 1) choices <- c(choices, choices) # slider does not work for choices of length one
+
+          shinyWidgets::updateSliderTextInput(
+            session = session,
+            inputId = "time-slider",
+            choices = choices,
+            selected = choices[1]
+          )
+          shinyWidgets::updateSliderTextInput(
+            session = session,
+            inputId = "time_range-slider",
+            choices = choices,
+            selected = c(min(choices), max(choices))
+          )
+        }
+      }) %>%
+        bindEvent(input[["measure-selectize"]],
+          ignoreNULL = FALSE,
+          ignoreInit = TRUE
+        )
+
       # update slider
       observe({
         if (input[["time_switch-buttons"]] == 1) {
@@ -153,6 +191,15 @@ mapPanelServer <- function(id) {
           shinyjs::disable(id = "display_plot-button")
         }
       })
+
+      # show plot when button is clicked
+      observe({
+        path <- paste0("../app_data/",input[["time-slider"]],".png")
+        plotServer(id="mainplot", path)
+      }) %>%
+        bindEvent(input[["display_plot-button"]],
+                  ignoreInit = TRUE
+        )
     }
   )
 }

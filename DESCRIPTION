@@ -11,4 +11,5 @@ Imports:
     magrittr,
     rjson,
     shiny,
-    shinyjs
+    shinyjs,
+    shinyWidgets

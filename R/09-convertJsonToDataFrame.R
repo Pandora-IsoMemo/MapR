@@ -3,8 +3,8 @@
 #' @param file path to json file
 #'
 #' @return data frame with relevant elements from json
-convert_json_to_data_frame <- function(file){
-  json_data <- rjson::fromJSON(file=file)
+convertJsonToDataFrame <- function(file) {
+  json_data <- rjson::fromJSON(file = file)
 
   # Initialize an empty list to store the extracted information
   result_list <- list()
@@ -33,8 +33,8 @@ convert_json_to_data_frame <- function(file){
             Variable = variable$Variable_name,
             Measure = measure$Measure_name,
             Measure_unit = measure$Measure_unit,
-            x__sequence_value = image$x__sequence_value,
-            x__display_value = image$x__display_value,
+            x_sequence_value = image$x_sequence_value,
+            x_display_value = image$x_display_value,
             file_type = image$file_type,
             location_type = image$location_type,
             address = image$address
