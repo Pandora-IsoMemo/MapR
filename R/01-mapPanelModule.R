@@ -9,12 +9,15 @@ mapPanelUI <- function(id) {
   sidebarLayout(
     sidebarPanel(
       width = 2,
-      fileInput("file", "Upload zip file", accept = ".zip"),
+      fileInput(
+        inputId = ns("file"),
+        label = "Upload zip file",
+        accept = ".zipm"
+      ),
       selectizeInputUI(
         id = ns("group_name"),
         label = "Group Name",
-        choices = unique(image_list$Group),
-        selected = NULL
+        choices = NULL
       ),
       selectizeInputUI(
         id = ns("variable"),
@@ -81,19 +84,41 @@ mapPanelServer <- function(id) {
   moduleServer(
     id,
     function(input, output, session) {
+      image_list <- reactiveVal()
       # load zip file
       observe({
-        # if(is.null(input$file))
-      browser()
-      }) %>% bindEvent(input[["file"]],
-        ignoreNULL = FALSE,
-        ignoreInit = TRUE
-      )
+        datapath <- input[["file"]]$datapath
+      if (substr(datapath, nchar(datapath)-5+1, nchar(datapath)) != ".zipm"){
+        shinyjs::alert("Only .zipm files are supported!")
+      } else {
+        unzip(datapath, exdir = tempdir())
+        image_list(convertJsonToDataFrame(file = paste0(tempdir(),"/image_list.json")))
+      }
+      }) %>% bindEvent(input[["file"]])
+
+      # fill group input
+      observe({
+        if (!is.null(image_list())){
+          choices <- unique(image_list()$Group)
+        } else {
+          choices <- ""
+        }
+        updateSelectizeInput(
+          session = session,
+          inputId = "group_name-selectize",
+          choices = choices,
+          selected = ""
+        )
+      }) %>%
+        bindEvent(image_list(),
+                  ignoreNULL = FALSE,
+                  ignoreInit = TRUE
+        )
 
       # fill variable input
       observe({
         if (!is.null(input[["group_name-selectize"]])) {
-          choices <- image_list$Variable[image_list$Group == input[["group_name-selectize"]]]
+          choices <- image_list()$Variable[image_list()$Group == input[["group_name-selectize"]]]
         } else {
           choices <- ""
         }
@@ -112,8 +137,8 @@ mapPanelServer <- function(id) {
       # fill measure input
       observe({
         if (!is.null(input[["variable-selectize"]])) {
-          choices <- image_list$Measure[image_list$Group == input[["group_name-selectize"]] &
-            image_list$Variable == input[["variable-selectize"]]]
+          choices <- image_list()$Measure[image_list()$Group == input[["group_name-selectize"]] &
+            image_list()$Variable == input[["variable-selectize"]]]
         } else {
           choices <- ""
         }
@@ -132,9 +157,9 @@ mapPanelServer <- function(id) {
       # update time sliders
       observe({
         if (!is.null(input[["measure-selectize"]])) {
-          choices <- as.numeric(unlist(image_list$x_display_value[image_list$Group == input[["group_name-selectize"]] &
-            image_list$Variable == input[["variable-selectize"]] &
-            image_list$Measure == input[["measure-selectize"]]]))
+          choices <- as.numeric(unlist(image_list()$x_display_value[image_list()$Group == input[["group_name-selectize"]] &
+            image_list()$Variable == input[["variable-selectize"]] &
+            image_list()$Measure == input[["measure-selectize"]]]))
 
           if (length(choices) == 1) choices <- c(choices, choices) # slider does not work for choices of length one
 
@@ -194,11 +219,15 @@ mapPanelServer <- function(id) {
 
       # show plot when button is clicked
       observe({
-        path <- paste0("../app_data/",input[["time-slider"]],".png")
-        plotServer(id="mainplot", path)
+        address <- image_list()$address[image_list()$Group == input[["group_name-selectize"]] &
+                             image_list()$Variable == input[["variable-selectize"]] &
+                             image_list()$Measure == input[["measure-selectize"]] &
+                             image_list()$x_display_value == input[["time-slider"]]]
+        path <- paste0(tempdir(),"/data/",address)
+        plotServer(id = "mainplot", path)
       }) %>%
         bindEvent(input[["display_plot-button"]],
-                  ignoreInit = TRUE
+          ignoreInit = TRUE
         )
     }
   )
