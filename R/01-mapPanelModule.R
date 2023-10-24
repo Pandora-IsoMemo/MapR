@@ -223,8 +223,32 @@ mapPanelServer <- function(id) {
                              image_list()$Variable == input[["variable-selectize"]] &
                              image_list()$Measure == input[["measure-selectize"]] &
                              image_list()$x_display_value == input[["time-slider"]]]
+
+        file_type <- image_list()$file_type[image_list()$Group == input[["group_name-selectize"]] &
+                                          image_list()$Variable == input[["variable-selectize"]] &
+                                          image_list()$Measure == input[["measure-selectize"]] &
+                                          image_list()$x_display_value == input[["time-slider"]]]
+
+        # For file_type == "nc" variable name, measure and time is not included in the data path.
+        # Therefore we use the values specified by the user.
+        if(file_type=="nc"){
+          variable = input[["variable-selectize"]]
+          measure = input[["measure-selectize"]]
+          time = input[["time-slider"]]
+        } else {
+          variable = NULL
+          measure = NULL
+          time = NULL
+        }
+
         path <- paste0(tempdir(),"/data/",address)
-        plotServer(id = "mainplot", path)
+
+        plotServer(id = "mainplot",
+                   path = path,
+                   file_type = file_type,
+                   variable = variable,
+                   measure = measure,
+                   time = time)
       }) %>%
         bindEvent(input[["display_plot-button"]],
           ignoreInit = TRUE

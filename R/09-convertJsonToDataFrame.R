@@ -33,7 +33,6 @@ convertJsonToDataFrame <- function(file) {
             Variable = variable$Variable_name,
             Measure = measure$Measure_name,
             Measure_unit = measure$Measure_unit,
-            x_sequence_value = image$x_sequence_value,
             x_display_value = image$x_display_value,
             file_type = image$file_type,
             location_type = image$location_type,
@@ -49,5 +48,6 @@ convertJsonToDataFrame <- function(file) {
 
   # Convert the list of lists into a dataframe
   result_df <- as.data.frame(do.call(rbind, result_list))
+  result_df[result_df == ""] <- "None"
   result_df
 }
