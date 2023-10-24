@@ -12,7 +12,8 @@
 #' @param rhs A function call using the magrittr semantics.
 #' @return The result of calling `rhs(lhs)`.
 
-
+#' @rawNamespace import(shiny)
 #' @importFrom rjson fromJSON
 
+utils::globalVariables(c("convertJsonToDataFrame")) # prevent note in R CMD check
 NULL

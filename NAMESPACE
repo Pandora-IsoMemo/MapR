@@ -2,6 +2,7 @@
 
 export("%>%")
 export(startApplication)
+import(shiny)
 importFrom(magrittr,"%>%")
 importFrom(rjson,fromJSON)
 importFrom(stats,setNames)
