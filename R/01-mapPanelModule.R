@@ -88,17 +88,17 @@ mapPanelServer <- function(id) {
       # load zip file
       observe({
         datapath <- input[["file"]]$datapath
-      if (substr(datapath, nchar(datapath)-5+1, nchar(datapath)) != ".zipm"){
-        shinyjs::alert("Only .zipm files are supported!")
-      } else {
-        unzip(datapath, exdir = tempdir())
-        image_list(convertJsonToDataFrame(file = paste0(tempdir(),"/image_list.json")))
-      }
+        if (substr(datapath, nchar(datapath) - 5 + 1, nchar(datapath)) != ".zipm") {
+          shinyjs::alert("Only .zipm files are supported!")
+        } else {
+          utils::unzip(datapath, exdir = tempdir())
+          image_list(convertJsonToDataFrame(file = paste0(tempdir(), "/image_list.json")))
+        }
       }) %>% bindEvent(input[["file"]])
 
       # fill group input
       observe({
-        if (!is.null(image_list())){
+        if (!is.null(image_list())) {
           choices <- unique(image_list()$Group)
         } else {
           choices <- ""
@@ -111,8 +111,8 @@ mapPanelServer <- function(id) {
         )
       }) %>%
         bindEvent(image_list(),
-                  ignoreNULL = FALSE,
-                  ignoreInit = TRUE
+          ignoreNULL = FALSE,
+          ignoreInit = TRUE
         )
 
       # fill variable input
@@ -220,35 +220,37 @@ mapPanelServer <- function(id) {
       # show plot when button is clicked
       observe({
         address <- image_list()$address[image_list()$Group == input[["group_name-selectize"]] &
-                             image_list()$Variable == input[["variable-selectize"]] &
-                             image_list()$Measure == input[["measure-selectize"]] &
-                             image_list()$x_display_value == input[["time-slider"]]]
+          image_list()$Variable == input[["variable-selectize"]] &
+          image_list()$Measure == input[["measure-selectize"]] &
+          image_list()$x_display_value == input[["time-slider"]]]
 
         file_type <- image_list()$file_type[image_list()$Group == input[["group_name-selectize"]] &
-                                          image_list()$Variable == input[["variable-selectize"]] &
-                                          image_list()$Measure == input[["measure-selectize"]] &
-                                          image_list()$x_display_value == input[["time-slider"]]]
+          image_list()$Variable == input[["variable-selectize"]] &
+          image_list()$Measure == input[["measure-selectize"]] &
+          image_list()$x_display_value == input[["time-slider"]]]
 
         # For file_type == "nc" variable name, measure and time is not included in the data path.
         # Therefore we use the values specified by the user.
-        if(file_type=="nc"){
-          variable = input[["variable-selectize"]]
-          measure = input[["measure-selectize"]]
-          time = input[["time-slider"]]
+        if (file_type == "nc") {
+          variable <- input[["variable-selectize"]]
+          measure <- input[["measure-selectize"]]
+          time <- input[["time-slider"]]
         } else {
-          variable = NULL
-          measure = NULL
-          time = NULL
+          variable <- NULL
+          measure <- NULL
+          time <- NULL
         }
 
-        path <- paste0(tempdir(),"/data/",address)
+        path <- paste0(tempdir(), "/data/", address)
 
-        plotServer(id = "mainplot",
-                   path = path,
-                   file_type = file_type,
-                   variable = variable,
-                   measure = measure,
-                   time = time)
+        plotServer(
+          id = "mainplot",
+          path = path,
+          file_type = file_type,
+          variable = variable,
+          measure = measure,
+          time = time
+        )
       }) %>%
         bindEvent(input[["display_plot-button"]],
           ignoreInit = TRUE

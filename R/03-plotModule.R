@@ -1,9 +1,20 @@
+#' UI function of plot module
+#'
+#' @param id id of the module
 plotUI <- function(id) {
   ns <- NS(id)
   plotOutput(ns("plot"))
 }
 
 
+#' Server function of plot module
+#'
+#' @param id id of the module
+#' @param path path to the file
+#' @param file_type file type of file
+#' @param variable variable from user selection
+#' @param measure measure from user selection
+#' @param time time from user selection
 plotServer <- function(id, path, file_type, variable=NULL, measure=NULL, time=NULL) {
   moduleServer(
     id,

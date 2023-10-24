@@ -3,4 +3,5 @@
 export("%>%")
 export(startApplication)
 importFrom(magrittr,"%>%")
+importFrom(rjson,fromJSON)
 importFrom(stats,setNames)
