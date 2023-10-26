@@ -4,4 +4,4 @@ ADD . .
 
 RUN installPackage
 
-CMD ["Rscript", "-e", "library(MapR);library(shiny);MapR::startApplication(3838)"]
+CMD ["Rscript", "-e", "library(MapR);startApplication(3838)"]
