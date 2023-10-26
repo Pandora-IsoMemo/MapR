@@ -6,12 +6,11 @@
 #'
 #' @export
 startApplication <- function(port = getOption("shiny.port"),
-                             host = getOption("shiny.host", "127.0.0.1"),
                              launch.browser = getOption("shiny.launch.browser", interactive())) {
   shiny::runApp(
     system.file("app", package = "MapR"),
     port = port,
-    host = host,
+    host = "0.0.0.0",
     launch.browser = launch.browser
   )
 }
