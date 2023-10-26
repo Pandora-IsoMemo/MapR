@@ -13,8 +13,6 @@ startApplication(
 \item{port}{port}
 
 \item{launch.browser}{If true, the system's default web browser will be launched}
-
-\item{host}{host}
 }
 \description{
 Start Application

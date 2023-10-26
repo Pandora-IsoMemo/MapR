@@ -1,7 +1,6 @@
 #' Start Application
 #'
 #' @param port port
-#' @param host host
 #' @param launch.browser If true, the system's default web browser will be launched
 #'
 #' @export
