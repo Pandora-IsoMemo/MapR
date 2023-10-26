@@ -3,7 +3,7 @@
 #' @param id module id
 #'
 #' @importFrom stats setNames
-#'
+#' @export
 mapPanelUI <- function(id) {
   ns <- NS(id)
   sidebarLayout(
@@ -75,7 +75,7 @@ mapPanelUI <- function(id) {
 #' Server function of mapPanel module
 #'
 #' @param id module id
-#'
+#' @export
 mapPanelServer <- function(id) {
   moduleServer(
     id,
