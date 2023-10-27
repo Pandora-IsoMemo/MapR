@@ -12,14 +12,26 @@ convertJsonToDataFrame <- function(file) {
   # Iterate over groups in selections
   for (i in seq_along(json_data$Selections)) {
     selection <- json_data$Selections[[i]]
+    if (selection$Group == "") {
+      shinyjs::alert(text = "Found a missing group name. Group was removed. Please check your json file.")
+      next
+    }
 
     # Iterate over variables in group
     for (j in seq_along(selection$Variable)) {
       variable <- selection$Variable[[j]]
+      if (variable$Variable_name == "") {
+        shinyjs::alert(text = "Found a missing variable name. Variable was removed. Please check your json file.")
+        next
+      }
 
       # Iterate over measures in variable
       for (k in seq_along(variable$Measure)) {
         measure <- variable$Measure[[k]]
+        if (measure$Measure_name == "") {
+          shinyjs::alert(text = "Found a missing measure name. Measure was removed. Please check your json file.")
+          next
+        }
 
         # Iterate over images in measure
         for (l in seq_along(measure$images)) {
@@ -46,8 +58,11 @@ convertJsonToDataFrame <- function(file) {
     }
   }
 
+  if(length(result_list) == 0) {
+    shinyjs::alert(text = "The file does not contain any valid cases.")
+  }
+
   # Convert the list of lists into a dataframe
   result_df <- as.data.frame(do.call(rbind, result_list))
-  result_df[result_df == ""] <- "None"
   result_df
 }

@@ -98,16 +98,23 @@ mapPanelServer <- function(id) {
 
       # fill group input
       observe({
-        if (!is.null(image_list())) {
-          choices <- unique(image_list()$Group)
-        } else {
+        choices <- unique(image_list()$Group)
+        if(is.null(choices)){
           choices <- ""
+          placeholder <- "Please upload valid data"
+        } else {
+          placeholder <- "Please make a selection"
         }
+
         updateSelectizeInput(
           session = session,
           inputId = "group_name-selectize",
           choices = choices,
-          selected = ""
+          selected = "",
+          options = list(
+            maxItems = 1,
+            placeholder = placeholder
+          )
         )
       }) %>%
         bindEvent(image_list(),
@@ -117,15 +124,10 @@ mapPanelServer <- function(id) {
 
       # fill variable input
       observe({
-        if (!is.null(input[["group_name-selectize"]])) {
-          choices <- image_list()$Variable[image_list()$Group == input[["group_name-selectize"]]]
-        } else {
-          choices <- ""
-        }
         updateSelectizeInput(
           session = session,
           inputId = "variable-selectize",
-          choices = choices,
+          choices = image_list()$Variable[image_list()$Group == input[["group_name-selectize"]]],
           selected = ""
         )
       }) %>%
@@ -136,16 +138,11 @@ mapPanelServer <- function(id) {
 
       # fill measure input
       observe({
-        if (!is.null(input[["variable-selectize"]])) {
-          choices <- image_list()$Measure[image_list()$Group == input[["group_name-selectize"]] &
-            image_list()$Variable == input[["variable-selectize"]]]
-        } else {
-          choices <- ""
-        }
         updateSelectizeInput(
           session = session,
           inputId = "measure-selectize",
-          choices = choices,
+          choices = image_list()$Measure[image_list()$Group == input[["group_name-selectize"]] &
+                                           image_list()$Variable == input[["variable-selectize"]]],
           selected = ""
         )
       }) %>%
@@ -156,7 +153,6 @@ mapPanelServer <- function(id) {
 
       # update time sliders
       observe({
-        if (!is.null(input[["measure-selectize"]])) {
           choices <- as.numeric(unlist(image_list()$x_display_value[image_list()$Group == input[["group_name-selectize"]] &
             image_list()$Variable == input[["variable-selectize"]] &
             image_list()$Measure == input[["measure-selectize"]]]))
@@ -175,7 +171,6 @@ mapPanelServer <- function(id) {
             choices = choices,
             selected = c(min(choices), max(choices))
           )
-        }
       }) %>%
         bindEvent(input[["measure-selectize"]],
           ignoreNULL = FALSE,

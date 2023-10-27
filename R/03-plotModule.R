@@ -19,7 +19,10 @@ plotServer <- function(id, path, file_type, variable=NULL, measure=NULL, time=NU
   moduleServer(
     id,
     function(input, output, session) {
-      if(file_type == "png"){
+      if(!file_type %in% c("png","nc")){
+        DataTools::tryCatchWithWarningsAndErrors(expr = warning(""),
+                                                 warningTitle = "file_type must be png or nc")
+      } else if(file_type == "png"){
       output$plot <- renderImage(
         {
           list(src = path, contentType = "image/png", alt = "Plot")
