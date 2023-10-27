@@ -4,4 +4,4 @@ ADD . .
 
 RUN installPackage
 
-CMD ["Rscript", "-e", "devtools::install_version('pastclim', version = '1.2.3', repos = 'http://cran.us.r-project.org');library(MapR);startApplication(3838)"]
+CMD ["Rscript", "-e", "devtools::install_version('pastclim', version = '1.2.2', repos = 'http://cran.us.r-project.org');library(MapR);startApplication(3838)"]
