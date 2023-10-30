@@ -14,6 +14,7 @@
 
 #' @rawNamespace import(shiny)
 #' @importFrom rjson fromJSON
+#' @importFrom DataTools importDataUI importDataServer
 
 utils::globalVariables(c("convertJsonToDataFrame")) # prevent note in R CMD check
 NULL

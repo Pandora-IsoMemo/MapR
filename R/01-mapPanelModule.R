@@ -9,11 +9,8 @@ mapPanelUI <- function(id) {
   sidebarLayout(
     sidebarPanel(
       width = 2,
-      fileInput(
-        inputId = ns("file"),
-        label = "Upload zip file",
-        accept = ".zipm"
-      ),
+      importDataUI(ns("file_import"), label = "Import ZIP file"),
+      br(), br(),
       selectizeInputUI(
         id = ns("group_name"),
         label = "Group Name",
@@ -86,15 +83,23 @@ mapPanelServer <- function(id) {
     function(input, output, session) {
       image_list <- reactiveVal()
       # load zip file
+      uploadedZip <- importDataServer("file_import",
+                                      defaultSource = "file",
+                                      importType = "zip",
+                                      fileExtension = "zipm",
+                                      mainFolder = "exampleZip",
+                                      expectedFileInZip = "image_list.json")
+
       observe({
-        datapath <- input[["file"]]$datapath
-        if (substr(datapath, nchar(datapath) - 5 + 1, nchar(datapath)) != ".zipm") {
-          shinyjs::alert("Only .zipm files are supported!")
-        } else {
-          utils::unzip(datapath, exdir = tempdir())
-          image_list(convertJsonToDataFrame(file = paste0(tempdir(), "/image_list.json")))
-        }
-      }) %>% bindEvent(input[["file"]])
+        # reset
+        image_list(NULL)
+        # maybe reset the plot??
+
+        req(length(uploadedZip()) > 0)
+        datapath <- uploadedZip()[[1]]
+        utils::unzip(datapath, exdir = tempdir())
+        image_list(convertJsonToDataFrame(file = paste0(tempdir(), "/image_list.json")))
+      }) %>% bindEvent(uploadedZip())
 
       # fill group input
       observe({
