@@ -9,11 +9,12 @@ mapPanelUI <- function(id) {
   sidebarLayout(
     sidebarPanel(
       width = 2,
+      importDataUI(ns("file_import"), label = "Import ZIP file"),
+      br(), br(),
       selectizeInputUI(
         id = ns("group_name"),
         label = "Group Name",
-        choices = unique(image_list$Group_name),
-        selected = NULL
+        choices = NULL
       ),
       selectizeInputUI(
         id = ns("variable"),
@@ -43,7 +44,7 @@ mapPanelUI <- function(id) {
       sliderInputUI(
         id = ns("time"),
         label = "Time",
-        value = 2015
+        selected = 2015
       ),
       # note: it is not possible to update a single value slider to range slider
       # therefore we create two different sliders and toggle them based on the time_switch selection
@@ -51,7 +52,7 @@ mapPanelUI <- function(id) {
         sliderInputUI(
           id = ns("time_range"),
           label = "Time",
-          value = c(2015, 2017)
+          selected = c(2015, 2017)
         )
       ),
       br(),
@@ -66,7 +67,7 @@ mapPanelUI <- function(id) {
       )
     ),
     mainPanel(
-      tags$h3("map placeholder")
+      plotUI(id = ns("mainplot"))
     )
   )
 }
@@ -80,17 +81,58 @@ mapPanelServer <- function(id) {
   moduleServer(
     id,
     function(input, output, session) {
+      image_list <- reactiveVal()
+      # load zip file
+      uploadedZip <- importDataServer("file_import",
+                                      defaultSource = "file",
+                                      importType = "zip",
+                                      fileExtension = "zipm",
+                                      mainFolder = "exampleZip",
+                                      expectedFileInZip = "image_list.json")
+
+      observe({
+        # reset
+        image_list(NULL)
+        # maybe reset the plot??
+
+        req(length(uploadedZip()) > 0)
+        datapath <- uploadedZip()[[1]]
+        utils::unzip(datapath, exdir = tempdir())
+        image_list(convertJsonToDataFrame(file = paste0(tempdir(), "/image_list.json")))
+      }) %>% bindEvent(uploadedZip())
+
+      # fill group input
+      observe({
+        choices <- unique(image_list()$Group)
+        if(is.null(choices)){
+          choices <- ""
+          placeholder <- "Please upload valid data"
+        } else {
+          placeholder <- "Please make a selection"
+        }
+
+        updateSelectizeInput(
+          session = session,
+          inputId = "group_name-selectize",
+          choices = choices,
+          selected = "",
+          options = list(
+            maxItems = 1,
+            placeholder = placeholder
+          )
+        )
+      }) %>%
+        bindEvent(image_list(),
+          ignoreNULL = FALSE,
+          ignoreInit = TRUE
+        )
+
       # fill variable input
       observe({
-        if (!is.null(input[["group_name-selectize"]])) {
-          choices <- image_list$Variable[image_list$Group_name == input[["group_name-selectize"]]]
-        } else {
-          choices <- ""
-        }
         updateSelectizeInput(
           session = session,
           inputId = "variable-selectize",
-          choices = choices,
+          choices = image_list()$Variable[image_list()$Group == input[["group_name-selectize"]]],
           selected = ""
         )
       }) %>%
@@ -101,20 +143,41 @@ mapPanelServer <- function(id) {
 
       # fill measure input
       observe({
-        if (!is.null(input[["variable-selectize"]])) {
-          choices <- image_list$Measure[image_list$Group_name == input[["group_name-selectize"]] &
-            image_list$Variable == input[["variable-selectize"]]]
-        } else {
-          choices <- ""
-        }
         updateSelectizeInput(
           session = session,
           inputId = "measure-selectize",
-          choices = choices,
+          choices = image_list()$Measure[image_list()$Group == input[["group_name-selectize"]] &
+                                           image_list()$Variable == input[["variable-selectize"]]],
           selected = ""
         )
       }) %>%
         bindEvent(input[["variable-selectize"]],
+          ignoreNULL = FALSE,
+          ignoreInit = TRUE
+        )
+
+      # update time sliders
+      observe({
+          choices <- as.numeric(unlist(image_list()$x_display_value[image_list()$Group == input[["group_name-selectize"]] &
+            image_list()$Variable == input[["variable-selectize"]] &
+            image_list()$Measure == input[["measure-selectize"]]]))
+
+          if (length(choices) == 1) choices <- c(choices, choices) # slider does not work for choices of length one
+
+          shinyWidgets::updateSliderTextInput(
+            session = session,
+            inputId = "time-slider",
+            choices = choices,
+            selected = choices[1]
+          )
+          shinyWidgets::updateSliderTextInput(
+            session = session,
+            inputId = "time_range-slider",
+            choices = choices,
+            selected = c(min(choices), max(choices))
+          )
+      }) %>%
+        bindEvent(input[["measure-selectize"]],
           ignoreNULL = FALSE,
           ignoreInit = TRUE
         )
@@ -153,6 +216,45 @@ mapPanelServer <- function(id) {
           shinyjs::disable(id = "display_plot-button")
         }
       })
+
+      # show plot when button is clicked
+      observe({
+        address <- image_list()$address[image_list()$Group == input[["group_name-selectize"]] &
+          image_list()$Variable == input[["variable-selectize"]] &
+          image_list()$Measure == input[["measure-selectize"]] &
+          image_list()$x_display_value == input[["time-slider"]]]
+
+        file_type <- image_list()$file_type[image_list()$Group == input[["group_name-selectize"]] &
+          image_list()$Variable == input[["variable-selectize"]] &
+          image_list()$Measure == input[["measure-selectize"]] &
+          image_list()$x_display_value == input[["time-slider"]]]
+
+        # For file_type == "nc" variable name, measure and time is not included in the data path.
+        # Therefore we use the values specified by the user.
+        if (file_type == "nc") {
+          variable <- input[["variable-selectize"]]
+          measure <- input[["measure-selectize"]]
+          time <- input[["time-slider"]]
+        } else {
+          variable <- NULL
+          measure <- NULL
+          time <- NULL
+        }
+
+        path <- paste0(tempdir(), "/data/", address)
+
+        plotServer(
+          id = "mainplot",
+          path = path,
+          file_type = file_type,
+          variable = variable,
+          measure = measure,
+          time = time
+        )
+      }) %>%
+        bindEvent(input[["display_plot-button"]],
+          ignoreInit = TRUE
+        )
     }
   )
 }

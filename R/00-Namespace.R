@@ -13,6 +13,8 @@
 #' @return The result of calling `rhs(lhs)`.
 
 #' @rawNamespace import(shiny)
+#' @importFrom rjson fromJSON
+#' @importFrom DataTools importDataUI importDataServer
 
-utils::globalVariables(c("image_list"))
+utils::globalVariables(c("convertJsonToDataFrame")) # prevent note in R CMD check
 NULL
