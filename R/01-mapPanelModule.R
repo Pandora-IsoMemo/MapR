@@ -258,4 +258,3 @@ mapPanelServer <- function(id) {
     }
   )
 }
-
