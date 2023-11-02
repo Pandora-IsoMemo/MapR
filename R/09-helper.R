@@ -66,3 +66,4 @@ convertJsonToDataFrame <- function(file) {
   result_df <- as.data.frame(do.call(rbind, result_list))
   result_df
 }
+
