@@ -10,7 +10,7 @@
 ^JenkinsfileMPI$
 ^bin$
 ^LICENSE\.md$
-data
 ^deploy\.sh$
 ^\..*$
 ^\.Rproj\.user$
+^inst/data$
