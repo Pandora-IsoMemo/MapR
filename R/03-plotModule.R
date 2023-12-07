@@ -3,7 +3,7 @@
 #' @param id id of the module
 plotUI <- function(id) {
   ns <- NS(id)
-  plotOutput(ns("plot"))
+  plotOutput(ns("plot"), height = "80%", width = "80%")
 }
 
 

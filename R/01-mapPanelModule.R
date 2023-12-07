@@ -67,7 +67,13 @@ mapPanelUI <- function(id) {
       )
     ),
     mainPanel(
-      plotUI(id = ns("mainplot"))
+      width = 10,
+      fluidRow(
+        column(12,
+          align = "center",
+          plotUI(id = ns("mainplot"))
+        )
+      )
     )
   )
 }
@@ -84,11 +90,12 @@ mapPanelServer <- function(id) {
       image_list <- reactiveVal()
       # load zip file
       uploadedZip <- importDataServer("file_import",
-                                      defaultSource = "file",
-                                      importType = "zip",
-                                      fileExtension = "zipm",
-                                      mainFolder = "exampleZip",
-                                      expectedFileInZip = "image_list.json")
+        defaultSource = "file",
+        importType = "zip",
+        fileExtension = "zipm",
+        mainFolder = "exampleZip",
+        expectedFileInZip = "image_list.json"
+      )
 
       observe({
         # reset
@@ -104,7 +111,7 @@ mapPanelServer <- function(id) {
       # fill group input
       observe({
         choices <- unique(image_list()$Group)
-        if(is.null(choices)){
+        if (is.null(choices)) {
           choices <- ""
           placeholder <- "Please upload valid data"
         } else {
@@ -147,7 +154,7 @@ mapPanelServer <- function(id) {
           session = session,
           inputId = "measure-selectize",
           choices = image_list()$Measure[image_list()$Group == input[["group_name-selectize"]] &
-                                           image_list()$Variable == input[["variable-selectize"]]],
+            image_list()$Variable == input[["variable-selectize"]]],
           selected = ""
         )
       }) %>%
@@ -158,24 +165,24 @@ mapPanelServer <- function(id) {
 
       # update time sliders
       observe({
-          choices <- as.numeric(unlist(image_list()$x_display_value[image_list()$Group == input[["group_name-selectize"]] &
-            image_list()$Variable == input[["variable-selectize"]] &
-            image_list()$Measure == input[["measure-selectize"]]]))
+        choices <- as.numeric(unlist(image_list()$x_display_value[image_list()$Group == input[["group_name-selectize"]] &
+          image_list()$Variable == input[["variable-selectize"]] &
+          image_list()$Measure == input[["measure-selectize"]]]))
 
-          if (length(choices) == 1) choices <- c(choices, choices) # slider does not work for choices of length one
+        if (length(choices) == 1) choices <- c(choices, choices) # slider does not work for choices of length one
 
-          shinyWidgets::updateSliderTextInput(
-            session = session,
-            inputId = "time-slider",
-            choices = choices,
-            selected = choices[1]
-          )
-          shinyWidgets::updateSliderTextInput(
-            session = session,
-            inputId = "time_range-slider",
-            choices = choices,
-            selected = c(min(choices), max(choices))
-          )
+        shinyWidgets::updateSliderTextInput(
+          session = session,
+          inputId = "time-slider",
+          choices = choices,
+          selected = choices[1]
+        )
+        shinyWidgets::updateSliderTextInput(
+          session = session,
+          inputId = "time_range-slider",
+          choices = choices,
+          selected = c(min(choices), max(choices))
+        )
       }) %>%
         bindEvent(input[["measure-selectize"]],
           ignoreNULL = FALSE,
