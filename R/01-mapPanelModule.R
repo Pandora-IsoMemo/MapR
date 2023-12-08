@@ -47,8 +47,7 @@ mapPanelServer <- function(id) {
         defaultSource = "file",
         importType = "zip",
         fileExtension = "zipm",
-        mainFolder = "exampleZip",
-        expectedFileInZip = "image_list.json"
+        mainFolder = "exampleZip"
       )
 
       # load inputs depending on content of zip file
@@ -60,7 +59,6 @@ mapPanelServer <- function(id) {
         req(length(uploadedZip()) > 0)
         datapath <- uploadedZip()[[1]]
         utils::unzip(datapath, exdir = tempdir()) # extract zip file to tempdir
-        image_list(convertImageListToDataFrame(file = paste0(tempdir(), "/image_list.json"))) # fill image list
 
         if ("questionnaire.json" %in% utils::unzip(datapath, list = TRUE)$Name) { # if questionnaire is present
           shinyjs::hide(id = "variable_selection_inputs") # hide variable selection inputs
@@ -68,6 +66,7 @@ mapPanelServer <- function(id) {
           questionnaire(rjson::fromJSON(file = paste0(tempdir(), "/questionnaire.json"))) # load new questionnaire
           createQuestionnaireInputs(id, questionnaire()) # create new questionnaire inputs
         } else { # if no questionnaire is present
+          image_list(convertImageListToDataFrame(file = paste0(tempdir(), "/image_list.json"))) # fill image list
           shinyjs::show(
             id = "variable_selection_inputs",
             anim = TRUE,
