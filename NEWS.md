@@ -1,5 +1,10 @@
 # MapR
 
+## 23.11.0
+
+### New Features
+- option to add and format a plot title.
+
 ## Version: 23.10.1
 
 ### New Features
