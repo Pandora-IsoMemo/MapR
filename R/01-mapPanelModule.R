@@ -22,10 +22,23 @@ mapPanelUI <- function(id) {
             )
           )
         )
-      )
+      ),
+      textFormatUI(ns("title"), label = "Title"),
     ),
     mainPanel(
-      plotUI(id = ns("mainplot"))
+      width = 10,
+      fluidRow(
+        column(12,
+          align = "center",
+          uiOutput(outputId = ns("plot_title"))
+        )
+      ),
+      fluidRow(
+        column(12,
+          align = "center",
+          plotUI(id = ns("mainplot"))
+        )
+      )
     )
   )
 }
@@ -99,8 +112,11 @@ mapPanelServer <- function(id) {
       #   }
       # })
 
-      # show plot when button is clicked
+      # show plot and plot formatting options when button is clicked
       observe({
+
+        shinyjs::show(id="title-options", anim = TRUE)
+
         address <- image_list()$address[image_list()$Group == input[["group_name-selectize"]] &
           image_list()$Variable == input[["variable-selectize"]] &
           image_list()$Measure == input[["measure-selectize"]] &
@@ -110,6 +126,11 @@ mapPanelServer <- function(id) {
           image_list()$Variable == input[["variable-selectize"]] &
           image_list()$Measure == input[["measure-selectize"]] &
           image_list()$x_display_value == input[["time-slider"]]]
+
+        unit <- image_list()$Measure_unit[image_list()$Group == input[["group_name-selectize"]] &
+                                              image_list()$Variable == input[["variable-selectize"]] &
+                                              image_list()$Measure == input[["measure-selectize"]] &
+                                              image_list()$x_display_value == input[["time-slider"]]]
 
         # For file_type == "nc" variable name, measure and time is not included in the data path.
         # Therefore we use the values specified by the user.
@@ -133,8 +154,31 @@ mapPanelServer <- function(id) {
           measure = measure,
           time = time
         )
+
+        updateTextInput(
+          session = session,
+          inputId = "title-text",
+          value = paste0(input[["variable-selectize"]]," - ", unit," - ", input[["measure-selectize"]])
+        )
       }) %>%
         bindEvent(input[["display_plot-button"]],
+          ignoreInit = TRUE
+        )
+
+      output$plot_title <- renderUI({
+        text <- input[["title-text"]]
+        col <- input[["title-color"]]
+        fontsize <- paste0(input[["title-fontsize"]], "px")
+        style <- paste("font-size: ", fontsize, ";", "color: ", col, ";", sep = "")
+        HTML(paste("<span style='", style, "'>", text, "</span>"))
+      }) %>%
+        bindEvent(
+          c(
+            input[["display_plot-button"]],
+            input[["title-text"]],
+            input[["title-fontsize"]],
+            input[["title-color"]]
+          ),
           ignoreInit = TRUE
         )
     }
