@@ -97,11 +97,13 @@ mapPanelServer <- function(id) {
       image_list <- reactiveVal()
       # load zip file
       uploadedZip <- importDataServer("file_import",
-        defaultSource = "file",
         importType = "zip",
-        fileExtension = "zipm",
-        mainFolder = "exampleZip",
-        expectedFileInZip = "image_list.json"
+        defaultSource = config()[["defaultSource"]],
+        ckanFileTypes = config()[["ckanFileTypes"]],
+        fileExtension = config()[["fileExtension"]],
+        mainFolder = config()[["mainFolder"]],
+        rPackageName = config()[["rPackageName"]],
+        expectedFileInZip = config()[["expectedFileInZip"]]
       )
 
       observe({
