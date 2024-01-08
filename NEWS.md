@@ -1,5 +1,11 @@
 # MapR
 
+## Version 23.12.1
+
+### New Features
+- _Import from Pandora_: 
+  - display of "About" information that is associated to a selected Pandora Repository
+
 ## 23.11.0
 
 ### New Features
