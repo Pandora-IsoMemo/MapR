@@ -80,16 +80,8 @@ mapPanelServer <- function(id) {
       # Fill inputs based on uploaded image list (if image list is available)
       fillVariableSelectionInputs(input, session, image_list)
 
-      # enable / disable actionButton
-      # observe({
-      #   if (!is.null(input[["group_name-selectize"]]) &&
-      #     !is.null(input[["variable-selectize"]]) &&
-      #     !is.null(input[["measure-selectize"]])) {
-      #     shinyjs::enable(id = "display_plot-button")
-      #   } else {
-      #     shinyjs::disable(id = "display_plot-button")
-      #   }
-      # })
+      # Enable / disable actionButton
+      observeEnableActionButton(input, image_list, questionnaire)
 
       # Show plot and plot formatting options when button is clicked
       observeShowPlot(
