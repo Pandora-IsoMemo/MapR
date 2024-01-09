@@ -1,0 +1,8 @@
+defaultSource: "file"           # for import of data
+# file types that are allowed for import from Pandora ("ckan")
+ckanFileTypes:
+  - "zipm"
+  - "zip"
+mainFolder: "exampleZip"  # for import of models
+fileExtension: "zipm"
+rPackageName: "MapR"

@@ -57,10 +57,13 @@ mapPanelServer <- function(id) {
 
       # Load zip file
       uploadedZip <- importDataServer("file_import",
-        defaultSource = "file",
         importType = "zip",
-        fileExtension = "zipm",
-        mainFolder = "exampleZip"
+        defaultSource = config()[["defaultSource"]],
+        ckanFileTypes = config()[["ckanFileTypes"]],
+        fileExtension = config()[["fileExtension"]],
+        mainFolder = config()[["mainFolder"]],
+        rPackageName = config()[["rPackageName"]]
+        # expectedFileInZip = config()[["expectedFileInZip"]] # currently image list is not required if a questionnaire.json is included
       )
 
       # Show and hide inputs depending on image_list or questionnaire being available
