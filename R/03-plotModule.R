@@ -13,9 +13,8 @@ plotUI <- function(id) {
 #' @param path path to the file
 #' @param file_type file type of file
 #' @param variable variable from user selection
-#' @param measure measure from user selection
 #' @param time time from user selection
-plotServer <- function(id, path, file_type, variable = NULL, measure = NULL, time = NULL) {
+plotServer <- function(id, path, file_type, variable = NULL, time = NULL) {
   moduleServer(
     id,
     function(input, output, session) {

@@ -4,7 +4,7 @@
 \alias{plotServer}
 \title{Server function of plot module}
 \usage{
-plotServer(id, path, file_type, variable = NULL, measure = NULL, time = NULL)
+plotServer(id, path, file_type, variable = NULL, time = NULL)
 }
 \arguments{
 \item{id}{id of the module}
@@ -14,8 +14,6 @@ plotServer(id, path, file_type, variable = NULL, measure = NULL, time = NULL)
 \item{file_type}{file type of file}
 
 \item{variable}{variable from user selection}
-
-\item{measure}{measure from user selection}
 
 \item{time}{time from user selection}
 }
