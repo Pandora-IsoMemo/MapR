@@ -1,9 +1,9 @@
-#' Reads json from file and converts it into the needed data frame format
+#' Reads image list from file and converts it into the needed data frame format
 #'
 #' @param file path to json file
 #'
 #' @return data frame with relevant elements from json
-convertJsonToDataFrame <- function(file) {
+convertImageListToDataFrame <- function(file) {
   json_data <- rjson::fromJSON(file = file)
 
   # Initialize an empty list to store the extracted information
@@ -58,7 +58,7 @@ convertJsonToDataFrame <- function(file) {
     }
   }
 
-  if(length(result_list) == 0) {
+  if (length(result_list) == 0) {
     shinyjs::alert(text = "The file does not contain any valid cases.")
   }
 

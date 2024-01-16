@@ -5,5 +5,4 @@ ckanFileTypes:
   - "zip"
 mainFolder: "exampleZip"  # for import of models
 fileExtension: "zipm"
-expectedFileInZip: "image_list.json"
 rPackageName: "MapR"

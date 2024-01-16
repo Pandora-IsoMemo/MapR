@@ -5,9 +5,9 @@
 #' @param ... further arguments passed to input
 actionButtonUI <- function(id, label, ...) {
   ns <- NS(id)
-  shinyjs::disabled(actionButton(
+  actionButton(
     inputId = ns("button"),
     label = label,
     ...
-  ))
+  )
 }

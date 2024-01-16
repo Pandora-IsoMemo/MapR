@@ -10,58 +10,16 @@ mapPanelUI <- function(id) {
     sidebarPanel(
       width = 2,
       importDataUI(ns("file_import"), label = "Import ZIP file"),
-      br(), br(),
-      selectizeInputUI(
-        id = ns("group_name"),
-        label = "Group Name",
-        choices = NULL
-      ),
-      selectizeInputUI(
-        id = ns("variable"),
-        label = "Variable",
-        choices = NULL
-      ),
-      selectizeInputUI(
-        id = ns("measure"),
-        label = "Measure",
-        choices = NULL
-      ),
-      br(),
-      column(12,
-        align = "center",
-        radioButtonsUI(
-          id = ns("time_switch"),
-          choices = setNames(
-            c(1, 2),
-            c(
-              "Single Map",
-              "Time plot"
-            )
-          )
-        )
-      ),
-      # slider years are currently hardcoded and will be replaced later
-      sliderInputUI(
-        id = ns("time"),
-        label = "Time",
-        selected = 2015
-      ),
-      # note: it is not possible to update a single value slider to range slider
-      # therefore we create two different sliders and toggle them based on the time_switch selection
-      shinyjs::hidden(
-        sliderInputUI(
-          id = ns("time_range"),
-          label = "Time",
-          selected = c(2015, 2017)
-        )
-      ),
+      createVariableSelectionInputs(id),
       br(),
       fluidRow(
         column(12,
           align = "center",
-          actionButtonUI(
-            id = ns("display_plot"),
-            label = "Display plot"
+          shinyjs::hidden(
+            actionButtonUI(
+              id = ns("display_plot"),
+              label = "Display plot"
+            )
           )
         )
       ),
@@ -95,197 +53,46 @@ mapPanelServer <- function(id) {
     id,
     function(input, output, session) {
       image_list <- reactiveVal()
-      # load zip file
+      questionnaire <- reactiveVal()
+
+      # Load zip file
       uploadedZip <- importDataServer("file_import",
         importType = "zip",
         defaultSource = config()[["defaultSource"]],
         ckanFileTypes = config()[["ckanFileTypes"]],
         fileExtension = config()[["fileExtension"]],
         mainFolder = config()[["mainFolder"]],
-        rPackageName = config()[["rPackageName"]],
-        expectedFileInZip = config()[["expectedFileInZip"]]
+        rPackageName = config()[["rPackageName"]]
+        # expectedFileInZip = config()[["expectedFileInZip"]] # currently image list is not required if a questionnaire.json is included
       )
 
-      observe({
-        # reset
-        image_list(NULL)
-        # maybe reset the plot??
+      # Show and hide inputs depending on image_list or questionnaire being available
+      observeShowAndHideInputs(
+        input = input,
+        output = output,
+        session = session,
+        uploadedZip = uploadedZip,
+        image_list = image_list,
+        questionnaire = questionnaire,
+        id = id
+      )
 
-        req(length(uploadedZip()) > 0)
-        datapath <- uploadedZip()[[1]]
-        utils::unzip(datapath, exdir = tempdir())
-        image_list(convertJsonToDataFrame(file = paste0(tempdir(), "/image_list.json")))
-      }) %>% bindEvent(uploadedZip())
+      # Fill inputs based on uploaded image list (if image list is available)
+      fillVariableSelectionInputs(input, session, image_list)
 
-      # fill group input
-      observe({
-        choices <- unique(image_list()$Group)
-        if (is.null(choices)) {
-          choices <- ""
-          placeholder <- "Please upload valid data"
-        } else {
-          placeholder <- "Please make a selection"
-        }
+      # Enable / disable actionButton
+      observeEnableActionButton(input, image_list, questionnaire)
 
-        updateSelectizeInput(
-          session = session,
-          inputId = "group_name-selectize",
-          choices = choices,
-          selected = "",
-          options = list(
-            maxItems = 1,
-            placeholder = placeholder
-          )
-        )
-      }) %>%
-        bindEvent(image_list(),
-          ignoreNULL = FALSE,
-          ignoreInit = TRUE
-        )
+      # Show plot and plot formatting options when button is clicked
+      observeShowPlot(
+        input = input,
+        output = output,
+        session = session,
+        image_list = image_list,
+        questionnaire = questionnaire
+      )
 
-      # fill variable input
-      observe({
-        updateSelectizeInput(
-          session = session,
-          inputId = "variable-selectize",
-          choices = image_list()$Variable[image_list()$Group == input[["group_name-selectize"]]],
-          selected = ""
-        )
-      }) %>%
-        bindEvent(input[["group_name-selectize"]],
-          ignoreNULL = FALSE,
-          ignoreInit = TRUE
-        )
-
-      # fill measure input
-      observe({
-        updateSelectizeInput(
-          session = session,
-          inputId = "measure-selectize",
-          choices = image_list()$Measure[image_list()$Group == input[["group_name-selectize"]] &
-            image_list()$Variable == input[["variable-selectize"]]],
-          selected = ""
-        )
-      }) %>%
-        bindEvent(input[["variable-selectize"]],
-          ignoreNULL = FALSE,
-          ignoreInit = TRUE
-        )
-
-      # update time sliders
-      observe({
-        choices <- as.numeric(unlist(image_list()$x_display_value[image_list()$Group == input[["group_name-selectize"]] &
-          image_list()$Variable == input[["variable-selectize"]] &
-          image_list()$Measure == input[["measure-selectize"]]]))
-
-        if (length(choices) == 1) choices <- c(choices, choices) # slider does not work for choices of length one
-
-        shinyWidgets::updateSliderTextInput(
-          session = session,
-          inputId = "time-slider",
-          choices = choices,
-          selected = choices[1]
-        )
-        shinyWidgets::updateSliderTextInput(
-          session = session,
-          inputId = "time_range-slider",
-          choices = choices,
-          selected = c(min(choices), max(choices))
-        )
-      }) %>%
-        bindEvent(input[["measure-selectize"]],
-          ignoreNULL = FALSE,
-          ignoreInit = TRUE
-        )
-
-      # update slider
-      observe({
-        if (input[["time_switch-buttons"]] == 1) {
-          shinyjs::hide(id = "time_range-slider")
-          shinyjs::show(
-            id = "time-slider",
-            anim = TRUE,
-            animType = "fade",
-            time = 1
-          )
-        } else {
-          shinyjs::hide(id = "time-slider")
-          shinyjs::show(
-            id = "time_range-slider",
-            anim = TRUE,
-            animType = "fade",
-            time = 1
-          )
-        }
-      }) %>%
-        bindEvent(input[["time_switch-buttons"]],
-          ignoreInit = TRUE
-        )
-
-      # enable / disable actionButton
-      observe({
-        if (!is.null(input[["group_name-selectize"]]) &&
-          !is.null(input[["variable-selectize"]]) &&
-          !is.null(input[["measure-selectize"]])) {
-          shinyjs::enable(id = "display_plot-button")
-        } else {
-          shinyjs::disable(id = "display_plot-button")
-        }
-      })
-
-      # show plot and plot formatting options when button is clicked
-      observe({
-
-        shinyjs::show(id="title-options", anim = TRUE)
-
-        address <- image_list()$address[image_list()$Group == input[["group_name-selectize"]] &
-          image_list()$Variable == input[["variable-selectize"]] &
-          image_list()$Measure == input[["measure-selectize"]] &
-          image_list()$x_display_value == input[["time-slider"]]]
-
-        file_type <- image_list()$file_type[image_list()$Group == input[["group_name-selectize"]] &
-          image_list()$Variable == input[["variable-selectize"]] &
-          image_list()$Measure == input[["measure-selectize"]] &
-          image_list()$x_display_value == input[["time-slider"]]]
-
-        unit <- image_list()$Measure_unit[image_list()$Group == input[["group_name-selectize"]] &
-                                              image_list()$Variable == input[["variable-selectize"]] &
-                                              image_list()$Measure == input[["measure-selectize"]] &
-                                              image_list()$x_display_value == input[["time-slider"]]]
-
-        # For file_type == "nc" variable name, measure and time is not included in the data path.
-        # Therefore we use the values specified by the user.
-        if (file_type == "nc") {
-          variable <- input[["variable-selectize"]]
-          measure <- input[["measure-selectize"]]
-          time <- input[["time-slider"]]
-        } else {
-          variable <- NULL
-          measure <- NULL
-          time <- NULL
-        }
-
-        path <- paste0(tempdir(), "/data/", address)
-
-        plotServer(
-          id = "mainplot",
-          path = path,
-          file_type = file_type,
-          variable = variable,
-          measure = measure,
-          time = time
-        )
-
-        updateTextInput(
-          session = session,
-          inputId = "title-text",
-          value = paste0(input[["variable-selectize"]]," - ", unit," - ", input[["measure-selectize"]])
-        )
-      }) %>%
-        bindEvent(input[["display_plot-button"]],
-          ignoreInit = TRUE
-        )
-
+      # Plot Title
       output$plot_title <- renderUI({
         text <- input[["title-text"]]
         col <- input[["title-color"]]

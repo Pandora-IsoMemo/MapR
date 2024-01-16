@@ -1,5 +1,10 @@
 # MapR
 
+## 24.1.0
+
+### New Features
+- user can fill out questionnaires and images are displayed depending on the answers
+
 ## Version 23.12.1
 
 ### New Features
