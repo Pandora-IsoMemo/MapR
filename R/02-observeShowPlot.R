@@ -89,10 +89,7 @@ prepareQuestionnaireImage <- function(input, questionnaire) {
   imageInfos <- lapply(questionnaire()$Plots, function(plot) {
     # Check if length of questions (inputs) is equal to length of required answers
     if (length(plot$Answers) != length(inputs)) {
-      DataTools::tryCatchWithWarningsAndErrors(
-        expr = stop(""),
-        errorTitle = "Number of questions and answers in questionnaire does not match"
-      )
+      shinyjs::alert("Number of questions and answers in questionnaire does not match")
     }
     # Check if all answers are true
     allTrue <- all(unlist(lapply(plot$Answers, function(answers) {
@@ -120,15 +117,9 @@ prepareQuestionnaireImage <- function(input, questionnaire) {
   # Check if no plot or more than one plot matches the criteria
   nNotNull <- sum(!sapply(imageInfos, is.null))
   if (nNotNull == 0) {
-    DataTools::tryCatchWithWarningsAndErrors(
-      expr = stop(""),
-      errorTitle = "No plot matches the criteria"
-    )
+    shinyjs::alert("No plot matches the criteria")
   } else if (nNotNull > 1) {
-    DataTools::tryCatchWithWarningsAndErrors(
-      expr = stop(""),
-      errorTitle = "More than one plot matches the criteria"
-    )
+    shinyjs::alert("More than one plot matches the criteria")
   } else {
     imageInfos[!sapply(imageInfos, is.null)][[1]]
   }

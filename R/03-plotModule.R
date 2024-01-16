@@ -19,10 +19,7 @@ plotServer <- function(id, path, file_type, variable = NULL, time = NULL) {
     id,
     function(input, output, session) {
       if (!file_type %in% c("png", "nc")) {
-        DataTools::tryCatchWithWarningsAndErrors(
-          expr = warning(""),
-          warningTitle = "file_type must be png or nc"
-        )
+        shinyjs::alert("file_type specified in json must be png or nc")
       } else if (file_type == "png") {
         output$plot <- renderImage(
           {
