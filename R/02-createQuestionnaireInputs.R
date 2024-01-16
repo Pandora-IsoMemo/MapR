@@ -9,17 +9,20 @@ createQuestionnaireInputs <- function(id, questions) {
     if (questions$Questions[[i]]$Type == "multiple choice") {
       label <- questions$Questions[[i]]$Question
       choices <- questions$Questions[[i]]$Answers
+      selected <- questions$Questions[[i]]$Fill_Value
       inputList[[i]] <- radioButtons(
         inputId = ns(paste0("question_", i)),
         choices = choices,
         label = label,
+        selected = selected
       )
     } else if (questions$Questions[[i]]$Type == "numeric") {
       label <- questions$Questions[[i]]$Question
+      value <- questions$Questions[[i]]$Fill_Value
       inputList[[i]] <- numericInput(
         inputId = ns(paste0("question_", i)),
         label = label,
-        value = 0
+        value = value
       )
     } else {
       shinyjs::alert(text = "Found a missing question type. Question was removed. Please check your json file.")
