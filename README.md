@@ -9,3 +9,7 @@ An App to display temporal and temperature graphical files for Isomemo.
 
 ### Release notes:
 - see `NEWS.md`
+
+## How to use this Package
+
+Refer to the vignette for a description of the usage of the MapR package.
