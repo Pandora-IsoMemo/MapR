@@ -14,6 +14,25 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+This vignette provides an overview on how to use MapR. MapR is an App to display temporal and temperature graphical files for Isomemo.
+
+## Introduction
+
+To work with MapR, a zip file is needed, which can be uploaded after starting the app. It is also possible to select an online zip files that contains example data. The zip file must contain both the images to be displayed (stored in a folder called `data`) and a `json` file that specifies which images are displayed depending on the users selection.
+
+The `json` file can be an image list (`image_list.json`) that contains group-, variable- and measure names and the image belonging to each combination of these three. Also for each image, the path where the image can be found in the `data` folder, must be included.
+
+Alternatively, the `json` file can be a questionnaire (`questionnaire.json`). The file must contain questions that are displayed to the user. Furthermore the file must contain the images to be displayed with the information about for which answer the specific image is displayed. Also the path where the image can be found in the `data` folder, must be included again.
+
+Both the `image_list.json` file or the `questionnaire.json` must have the same structure as provided in the [example zip files](https://github.com/Pandora-IsoMemo/MapR/tree/beta/inst/app/exampleZip).
+
+## Usage
+
+To start the app one can use the online version or run the following command locally:
+
+```{r, eval=FALSE, setup}
 library(MapR)
+startApplication()
 ```
+
+After starting the app a zip file must be uploaded by clicking on the `Import ZIP file` button. Depending on the concent of the zip file (`image_list.json` or `questionnaire.json`), the app will display different inputs that can be filled out by the user. Finally, by clicking on the button `Display plot`, the image can be displayed.
