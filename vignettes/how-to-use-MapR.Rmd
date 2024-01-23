@@ -22,7 +22,7 @@ To work with MapR, a zip file is needed, which can be uploaded after starting th
 
 The `json` file can be an image list (`image_list.json`) that contains group-, variable- and measure names and the image belonging to each combination of these three. Also for each image, the path where the image can be found in the `data` folder, must be included.
 
-Alternatively, the `json` file can be a questionnaire (`questionnaire.json`). The file must contain questions that are displayed to the user. Furthermore the file must contain the images to be displayed with the information about for which answer the specific image is displayed. Also the path where the image can be found in the `data` folder, must be included again.
+Alternatively, the `json` file can be a questionnaire (`questionnaire.json`). The file must contain questions that are displayed to the user. Furthermore the file must contain the images to be displayed with the information which answer is needed to display a specific image. Also the path where the image can be found in the `data` folder, must be included again.
 
 Both the `image_list.json` file or the `questionnaire.json` must have the same structure as provided in the [example zip files](https://github.com/Pandora-IsoMemo/MapR/tree/beta/inst/app/exampleZip).
 
