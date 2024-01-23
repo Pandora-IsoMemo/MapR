@@ -18,7 +18,7 @@ This vignette provides an overview on how to use MapR. MapR is an App to display
 
 ## Introduction
 
-To work with MapR, a zip file is needed, which can be uploaded after starting the app. It is also possible to select an online zip files that contains example data. The zip file must contain both the images to be displayed (stored in a folder called `data`) and a `json` file that specifies which images are displayed depending on the users selection.
+To work with MapR, a zip file is needed, which can be uploaded after starting the app. It is also possible to select an online zip file that contains example data. The zip file must contain both the images to be displayed (stored in a folder called `data`) and a `json` file that specifies which images are displayed depending on the users selection.
 
 The `json` file can be an image list (`image_list.json`) that contains group-, variable- and measure names and the image belonging to each combination of these three. Also for each image, the path where the image can be found in the `data` folder, must be included.
 
