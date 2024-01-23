@@ -106,21 +106,29 @@ specific image. Also the path where the image can be found in the
 <p>Both the <code>image_list.json</code> file or the
 <code>questionnaire.json</code> must have the same structure as provided
 in the <a href="https://github.com/Pandora-IsoMemo/MapR/tree/beta/inst/app/exampleZip" class="external-link">example
-zip files</a>. Some fields need more attention because only specific
-values are supported by the app. Within both json files the field
-<code>file_type</code> must be “png” or “nc”. Within
-<code>questionnaire.json</code> the field <code>Type</code> belonging to
-<code>Questions</code> can be either “multiple choice” or “numeric”. If
-“multiple choice” is selected, the field <code>Answers</code> must
-contain a list of possible answers (see example files). If “numeric” is
-selected, the field <code>Answers</code> should be empty. For
-<code>"Type": "numeric"</code> it is possible to specify a
-<code>Fill_Value</code> which is prefilled into the input field. If
-<code>Fill_Value</code> is an empty string (““), the input field is
-empty. The field <code>Type</code> belonging to <code>Plots</code> can
-be any mathematical operator (e.g. <code>&gt;</code>,
-<code>&lt;=</code>, <code>==</code>, <code>!=</code>,
-<code>&gt;=</code>, <code>&lt;</code>).</p>
+zip files</a>.</p>
+<p>Some fields need more attention because only specific values are
+supported by the app:</p>
+<p>Within both json files the field <code>file_type</code> must be “png”
+or “nc”.</p>
+<p>Within <code>questionnaire.json</code></p>
+<ul>
+<li>the field <code>Type</code> belonging to <code>Questions</code> can
+be either “multiple choice” or “numeric”.
+<ul>
+<li>If “multiple choice” is selected, the field <code>Answers</code>
+must contain a list of possible answers (see example files).</li>
+<li>If “numeric” is selected, the field <code>Answers</code> should be
+empty. Additionally, one can specify a <code>Fill_Value</code> which is
+prefilled into the input field. If <code>Fill_Value</code> is an empty
+string (<code>""</code>), the input field is empty.</li>
+</ul>
+</li>
+<li>the field <code>Type</code> belonging to <code>Plots</code> can be
+any mathematical operator (e.g. <code>&gt;</code>, <code>&lt;=</code>,
+<code>==</code>, <code>!=</code>, <code>&gt;=</code>,
+<code>&lt;</code>).</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
