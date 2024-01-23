@@ -87,7 +87,7 @@ to display temporal and temperature graphical files for Isomemo.</p>
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>To work with MapR, a zip file is needed, which can be uploaded after
-starting the app. It is also possible to select an online zip files that
+starting the app. It is also possible to select an online zip file that
 contains example data. The zip file must contain both the images to be
 displayed (stored in a folder called <code>data</code>) and a
 <code>json</code> file that specifies which images are displayed
@@ -100,13 +100,27 @@ three. Also for each image, the path where the image can be found in the
 <p>Alternatively, the <code>json</code> file can be a questionnaire
 (<code>questionnaire.json</code>). The file must contain questions that
 are displayed to the user. Furthermore the file must contain the images
-to be displayed with the information about for which answer the specific
-image is displayed. Also the path where the image can be found in the
+to be displayed with the information which answer is needed to display a
+specific image. Also the path where the image can be found in the
 <code>data</code> folder, must be included again.</p>
 <p>Both the <code>image_list.json</code> file or the
 <code>questionnaire.json</code> must have the same structure as provided
 in the <a href="https://github.com/Pandora-IsoMemo/MapR/tree/beta/inst/app/exampleZip" class="external-link">example
-zip files</a>.</p>
+zip files</a>. Some fields need more attention because only specific
+values are supported by the app. Within both json files the field
+<code>file_type</code> must be “png” or “nc”. Within
+<code>questionnaire.json</code> the field <code>Type</code> belonging to
+<code>Questions</code> can be either “multiple choice” or “numeric”. If
+“multiple choice” is selected, the field <code>Answers</code> must
+contain a list of possible answers (see example files). If “numeric” is
+selected, the field <code>Answers</code> should be empty. For
+<code>"Type": "numeric"</code> it is possible to specify a
+<code>Fill_Value</code> which is prefilled into the input field. If
+<code>Fill_Value</code> is an empty string (““), the input field is
+empty. The field <code>Type</code> belonging to <code>Plots</code> can
+be any mathematical operator (e.g. <code>&gt;</code>,
+<code>&lt;=</code>, <code>==</code>, <code>!=</code>,
+<code>&gt;=</code>, <code>&lt;</code>).</p>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>

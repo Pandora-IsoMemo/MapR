@@ -24,7 +24,7 @@ The `json` file can be an image list (`image_list.json`) that contains group-, v
 
 Alternatively, the `json` file can be a questionnaire (`questionnaire.json`). The file must contain questions that are displayed to the user. Furthermore the file must contain the images to be displayed with the information which answer is needed to display a specific image. Also the path where the image can be found in the `data` folder, must be included again.
 
-Both the `image_list.json` file or the `questionnaire.json` must have the same structure as provided in the [example zip files](https://github.com/Pandora-IsoMemo/MapR/tree/beta/inst/app/exampleZip).
+Both the `image_list.json` file or the `questionnaire.json` must have the same structure as provided in the [example zip files](https://github.com/Pandora-IsoMemo/MapR/tree/beta/inst/app/exampleZip). Some fields need more attention because only specific values are supported by the app. Within both json files the field `file_type` must be "png" or "nc". Within `questionnaire.json` the field `Type` belonging to `Questions` can be either "multiple choice" or "numeric". If "multiple choice" is selected, the field `Answers` must contain a list of possible answers (see example files). If "numeric" is selected, the field `Answers` should be empty. For `"Type": "numeric"` it is possible to specify a `Fill_Value` which is prefilled into the input field. If `Fill_Value` is an empty string (`""`), the input field is empty. The field `Type` belonging to `Plots` can be any mathematical operator (e.g. `>`, `<=`, `==`, `!=`, `>=`, `<`).
 
 ## Usage
 

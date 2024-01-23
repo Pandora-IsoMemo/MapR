@@ -3,9 +3,9 @@ An App to display temporal and temperature graphical files for Isomemo.
 
 ### Access to online versions:
 - MAIN versions:
-  - tbd 
+  - https://pandoraapp.earth/app/mapr 
 - BETA versions:
-  - Search: https://pandoraapp.earth/app/mapr-beta
+  - https://pandoraapp.earth/app/mapr-beta
 
 ### Release notes:
 - see `NEWS.md`
