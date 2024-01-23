@@ -13,6 +13,8 @@
 #' @return The result of calling `rhs(lhs)`.
 
 #' @rawNamespace import(shiny)
+#' @importFrom rjson fromJSON
+#' @importFrom DataTools importDataUI importDataServer
+#' @importFrom yaml read_yaml
 
-utils::globalVariables(c("image_list"))
 NULL

@@ -13,3 +13,4 @@
 ^deploy\.sh$
 ^\..*$
 ^\.Rproj\.user$
+^inst/data$
