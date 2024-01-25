@@ -41,7 +41,7 @@ jobs:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
-          extra-repositories: 'https://Pandora-IsoMemo.github.io/drat/'
+          extra-repositories: https://Pandora-IsoMemo.github.io/drat/
       
       - name: add rprofile
         run: |
