@@ -49,6 +49,12 @@ jobs:
           cat(readLines("~/.Rprofile"), sep = "\n")
         shell: Rscript {0}
 
+      - name: Install rgpt3 dependency
+        run: |
+          install.packages("remotes")
+          remotes::install_github("ben-aaron188/rgpt3")
+        shell: Rscript {0}
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
