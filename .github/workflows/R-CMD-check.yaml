@@ -43,7 +43,8 @@ jobs:
           use-public-rspm: true
       
       - name: add rprofile
-        run: cat("options(repos = c(getOption("repos"), PANDORA = "https://Pandora-IsoMemo.github.io/drat/"))\n", file = "~/.Rprofile", append = TRUE)
+        run: |
+          cat("\noptions(repos = c(getOption("repos"), PANDORA = "https://Pandora-IsoMemo.github.io/drat/"))\n", file = "~/.Rprofile", append = TRUE)
         shell: Rscript {0}
 
       - uses: r-lib/actions/setup-r-dependencies@v2
