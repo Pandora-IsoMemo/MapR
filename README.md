@@ -12,7 +12,8 @@ An App to display temporal and temperature graphical files for Isomemo.
 
 ## How to use this Package
 
-Refer to the vignette for a description of the usage of the MapR package.
+Refer to the vignette for a description of the usage of the MapR package. You can find it in the
+[documentation](https://pandora-isomemo.github.io/MapR/) of this package.
 
 ----
 
@@ -20,6 +21,7 @@ Refer to the vignette for a description of the usage of the MapR package.
 
 When adding information to _help_ sites, _docstrings_ or the _vignette_ of this package, please update documentation locally as follows:
 
-`devtools::document()` # or CTRL + SHIFT + D in RStudio
-
-`devtools::build_site()`
+```R
+devtools::document() # or CTRL + SHIFT + D in RStudio
+devtools::build_site()
+```
