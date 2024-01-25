@@ -51,6 +51,7 @@ jobs:
 
       - name: Install rgpt3 dependency
         run: |
+          install.packages("devtools")
           devtools::install_github("ben-aaron188/rgpt3")
         shell: Rscript {0}
 
