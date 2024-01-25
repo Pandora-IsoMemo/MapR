@@ -44,7 +44,8 @@ jobs:
       
       - name: add rprofile
         run: |
-          cat("\noptions(repos = c(getOption("repos"), PANDORA = "https://Pandora-IsoMemo.github.io/drat/"))\n", file = "~/.Rprofile", append = TRUE)
+          cat("\noptions(tinytex.verbose = TRUE)\n", file = "~/.Rprofile", append = TRUE)
+          cat(readLines("~/.Rprofile"), sep = "\n")
         shell: Rscript {0}
 
       - uses: r-lib/actions/setup-r-dependencies@v2
