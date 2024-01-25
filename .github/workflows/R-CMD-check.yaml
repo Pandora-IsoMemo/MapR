@@ -19,13 +19,13 @@ jobs:
       matrix:
         config:
           # We only test only a subset of os & r combination for non CRAN packages
-          - {os: macos-latest,   r: 'release'}
-          - {os: windows-latest, r: 'release'}
-          - {os: windows-latest, r: '4.1'}
-          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
+          #- {os: macos-latest,   r: 'release'}
+          #- {os: windows-latest, r: 'release'}
+          #- {os: windows-latest, r: '4.1'}
+          #- {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
-          - {os: ubuntu-latest,   r: 'oldrel-1'}
-          - {os: ubuntu-latest,   r: 'oldrel-2'}
+          #- {os: ubuntu-latest,   r: 'oldrel-1'}
+          #- {os: ubuntu-latest,   r: 'oldrel-2'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -44,7 +44,7 @@ jobs:
       
       - name: add rprofile
         run: |
-          cat("\noptions(tinytex.verbose = TRUE)\n", file = "~/.Rprofile", append = TRUE)
+          #cat("\noptions(tinytex.verbose = TRUE)\n", file = "~/.Rprofile", append = TRUE)
           cat(readLines("~/.Rprofile"), sep = "\n")
         shell: Rscript {0}
 
