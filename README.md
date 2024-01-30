@@ -8,7 +8,7 @@ An App to display temporal and temperature graphical files for Isomemo.
 
 ## Access to online versions:
 - [MAIN version](https://pandoraapp.earth/app/mapr) 
-- [BETA versions](https://pandoraapp.earth/app/mapr-beta)
+- [BETA version](https://pandoraapp.earth/app/mapr-beta)
 
 ## Release notes:
 
