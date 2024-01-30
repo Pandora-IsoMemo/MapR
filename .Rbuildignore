@@ -14,3 +14,7 @@
 ^\..*$
 ^\.Rproj\.user$
 ^inst/data$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
