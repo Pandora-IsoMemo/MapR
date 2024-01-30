@@ -1,4 +1,9 @@
 # MapR
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/Pandora-IsoMemo/MapR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Pandora-IsoMemo/MapR/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 An App to display temporal and temperature graphical files for Isomemo.
 
 ## Access to online versions:
@@ -6,6 +11,7 @@ An App to display temporal and temperature graphical files for Isomemo.
 - [BETA versions](https://pandoraapp.earth/app/mapr-beta)
 
 ## Release notes:
+
 - see `NEWS.md`
 
 ## How to use this Package
@@ -13,8 +19,6 @@ An App to display temporal and temperature graphical files for Isomemo.
 Refer to the [vignette](https://pandora-isomemo.github.io/MapR/articles/how-to-use-MapR.html) 
 for a description of the usage of the MapR package. You can find it in the 
 [documentation](https://pandora-isomemo.github.io/MapR/) of this package.
-
-----
 
 ## Notes for developers
 
