@@ -15,6 +15,7 @@
 #' @rawNamespace import(shiny)
 #' @importFrom rjson fromJSON
 #' @importFrom DataTools importDataUI importDataServer
+#' @importFrom shinyTools headerButtonsUI includeShinyToolsCSS
 #' @importFrom yaml read_yaml
 
 NULL

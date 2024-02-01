@@ -1,5 +1,10 @@
 # MapR
 
+## 24.2.0
+
+### New Features
+- adds header with Pandora, IsoMemo and help links
+
 ## 24.1.0
 
 ### New Features
