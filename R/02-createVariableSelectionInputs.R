@@ -51,6 +51,39 @@ createVariableSelectionInputs <- function(id) {
           selected = c(2015, 2017)
         )
       ),
+      fluidRow(
+        column(6,
+          align = "center",
+          shinyjs::hidden(
+            numericInput(
+              inputId = ns("latitude"),
+              label = "Latitude",
+              value = 0
+            )
+          )
+        ),
+        column(6,
+          align = "center",
+          shinyjs::hidden(
+            numericInput(
+              inputId = ns("longitude"),
+              label = "Longitude",
+              value = 0
+            )
+          )
+        )
+      ),
+      br(),
+      fluidRow(
+        column(12,
+          align = "center",
+          shinyjs::hidden(
+            dataExportButton(
+              id = ns("download")
+            )
+          )
+        )
+      )
     ))
   )
 }

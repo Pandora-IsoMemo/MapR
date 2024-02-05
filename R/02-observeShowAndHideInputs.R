@@ -34,12 +34,5 @@ observeShowAndHideInputs <- function(input, output, session, uploadedZip, image_
       removeUI(selector = "#map_panel-questionnaire_inputs", immediate = TRUE) #  remove old questionnaire inputs
       questionnaire(NULL) # reset questionnaire
     }
-
-    shinyjs::show(
-      id = "display_plot-button",
-      anim = TRUE,
-      animType = "fade",
-      time = 1
-    )
   }) %>% bindEvent(uploadedZip(), ignoreInit = TRUE)
 }

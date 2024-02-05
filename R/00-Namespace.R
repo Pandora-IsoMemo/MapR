@@ -13,9 +13,11 @@
 #' @return The result of calling `rhs(lhs)`.
 
 #' @rawNamespace import(shiny)
-#' @importFrom rjson fromJSON
+#' @importFrom rjson fromJSON toJSON
 #' @importFrom DataTools importDataUI importDataServer
+#' @importFrom openxlsx write.xlsx
 #' @importFrom shinyTools headerButtonsUI includeShinyToolsCSS
+#' @importFrom utils write.table
 #' @importFrom yaml read_yaml
 
 NULL

@@ -8,7 +8,9 @@
 observeShowPlot <- function(input, output, session, image_list, questionnaire) {
   observe({
     shinyjs::show(id = "title-options", anim = TRUE)
-    output[["mainplot-plot"]] <- NULL
+    shinyjs::show(id = "plot_title", anim = TRUE)
+    shinyjs::hide(id = "maintable-table")
+    shinyjs::show(id = "mainplot-plot")
 
     if (!is.null(image_list())) {
       imageInfos <- prepareImageListImage(input = input, image_list = image_list)

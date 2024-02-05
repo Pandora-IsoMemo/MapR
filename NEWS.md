@@ -1,3 +1,8 @@
+# MapR 24.2.1
+
+## New Features
+- display and download of time plot data
+
 # MapR 24.2.0
 
 ## New Features
