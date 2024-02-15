@@ -31,7 +31,7 @@ createVariableSelectionInputs <- function(id) {
             c(1, 2),
             c(
               "Single Map",
-              "Time plot"
+              "Time data"
             )
           )
         )
@@ -58,7 +58,9 @@ createVariableSelectionInputs <- function(id) {
             numericInput(
               inputId = ns("latitude"),
               label = "Latitude",
-              value = 0
+              value = 50.92,
+              min = -90,
+              max = 90
             )
           )
         ),
@@ -68,7 +70,9 @@ createVariableSelectionInputs <- function(id) {
             numericInput(
               inputId = ns("longitude"),
               label = "Longitude",
-              value = 0
+              value = 11.58,
+              min = -180,
+              max = 180
             )
           )
         )

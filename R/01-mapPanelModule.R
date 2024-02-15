@@ -24,7 +24,7 @@ mapPanelUI <- function(id) {
           shinyjs::hidden(
             actionButtonUI(
               id = ns("display_table"),
-              label = "Display time plot data"
+              label = "Display time data"
             )
           )
         )
