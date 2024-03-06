@@ -106,11 +106,9 @@ mapPanelServer <- function(id) {
                        image_list = image_list,
                        table_data = table_data)
 
-      dataExport(
-        input = input,
-        output = output,
-        session = session,
-        df = table_data,
+      dataExportServer(
+        id = "download",
+        dataFun = reactive({ function() table_data() }),
         filename = "data"
       )
 

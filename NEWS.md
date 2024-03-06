@@ -1,3 +1,8 @@
+# MapR 24.3.0
+
+## Updates
+- applying exportData module from shinyTools package, removing the code from this package
+
 # MapR 24.2.1
 
 ## New Features
