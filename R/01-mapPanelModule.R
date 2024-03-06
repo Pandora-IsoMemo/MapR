@@ -20,6 +20,12 @@ mapPanelUI <- function(id) {
               id = ns("display_plot"),
               label = "Display plot"
             )
+          ),
+          shinyjs::hidden(
+            actionButtonUI(
+              id = ns("display_table"),
+              label = "Display time data"
+            )
           )
         )
       ),
@@ -36,7 +42,8 @@ mapPanelUI <- function(id) {
       fluidRow(
         column(12,
           align = "center",
-          plotUI(id = ns("mainplot"))
+          plotUI(id = ns("mainplot")),
+          tableUI(id = ns("maintable"))
         )
       )
     )
@@ -54,6 +61,7 @@ mapPanelServer <- function(id) {
     function(input, output, session) {
       image_list <- reactiveVal()
       questionnaire <- reactiveVal()
+      table_data <- reactiveVal()
 
       # Load zip file
       uploadedZip <- importDataServer("file_import",
@@ -90,6 +98,18 @@ mapPanelServer <- function(id) {
         session = session,
         image_list = image_list,
         questionnaire = questionnaire
+      )
+
+      observeShowTable(input = input,
+                       output = output,
+                       session = session,
+                       image_list = image_list,
+                       table_data = table_data)
+
+      dataExportServer(
+        id = "download",
+        dataFun = reactive({ function() table_data() }),
+        filename = "data"
       )
 
       # Plot Title
