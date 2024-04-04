@@ -30,3 +30,5 @@ the main branch is build automatically via github action.
 devtools::document() # or CTRL + SHIFT + D in RStudio
 devtools::build_site()
 ```
+
+test gh workflows
