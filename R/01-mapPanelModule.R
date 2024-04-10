@@ -69,8 +69,7 @@ mapPanelServer <- function(id) {
         defaultSource = config()[["defaultSource"]],
         ckanFileTypes = config()[["ckanFileTypes"]],
         fileExtension = config()[["fileExtension"]],
-        mainFolder = config()[["mainFolder"]],
-        rPackageName = config()[["rPackageName"]]
+        options = importOptions(rPackageName = config()[["rPackageName"]])
         # expectedFileInZip = config()[["expectedFileInZip"]] # currently image list is not required if a questionnaire.json is included
       )
 

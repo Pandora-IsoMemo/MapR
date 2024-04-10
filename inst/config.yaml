@@ -3,6 +3,5 @@ defaultSource: "file"           # for import of data
 ckanFileTypes:
   - "zipm"
   - "zip"
-mainFolder: "exampleZip"  # for import of models
-fileExtension: "zipm"
+fileExtension: "zipm"   # for import of models
 rPackageName: "MapR"
