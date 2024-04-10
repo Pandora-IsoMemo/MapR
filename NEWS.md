@@ -1,3 +1,8 @@
+# MapR 24.1.2
+
+## Bug Fixes
+- apply most recent DataTools version to fix the broken path to the example zip files
+
 # MapR 24.1.1
 
 ## New Features
