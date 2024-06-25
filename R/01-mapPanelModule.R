@@ -30,6 +30,25 @@ mapPanelUI <- function(id) {
         )
       ),
       textFormatUI(ns("title"), label = "Title"),
+      shinyjs::hidden(
+        div(
+          id = ns("download_options"),
+          hr(),
+          checkboxInput(
+            inputId = ns("download_inputs"),
+            label = "Download all user inputs",
+            value = FALSE
+          )
+        )
+      ),
+      conditionalPanel(
+        ns = ns,
+        condition = "input.download_inputs == true",
+        downloadModelUI(
+          id = ns("session_download"),
+          label = "Download Inputs"
+        )
+      )
     ),
     mainPanel(
       width = 10,
@@ -128,6 +147,22 @@ mapPanelServer <- function(id) {
           ),
           ignoreInit = TRUE
         )
+
+      # Session DOWN- / UPLOAD ----
+      uploadedNotes <- reactiveVal(NULL)
+
+      # export inputs and all files
+      downloadModelServer("session_download",
+                          dat = reactive(NULL),
+                          inputs = input,
+                          model = reactive(NULL),
+                          pathToOtherZip = uploadedZip()[[1]],
+                          rPackageName = config()[["rPackageName"]],
+                          defaultFileName = config()[["defaultFileName"]],
+                          fileExtension = config()[["fileExtension"]],
+                          modelNotes = uploadedNotes,
+                          triggerUpdate = reactive(TRUE),
+                          onlySettings = TRUE)
     }
   )
 }
