@@ -1,3 +1,9 @@
+# MapR 24.6.0
+
+## New Features
+- option to download all user inputs together with the content of the zip files of all imported
+  figures
+
 # MapR 24.3.0
 
 ## Updates
