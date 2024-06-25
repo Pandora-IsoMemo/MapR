@@ -2,7 +2,7 @@
 
 ## New Features
 - option to download all user inputs together with the content of the zip files of all imported
-  figures
+  figures (#29)
 
 # MapR 24.3.0
 
