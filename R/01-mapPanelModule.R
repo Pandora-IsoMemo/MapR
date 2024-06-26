@@ -30,25 +30,7 @@ mapPanelUI <- function(id) {
         )
       ),
       textFormatUI(ns("title"), label = "Title"),
-      shinyjs::hidden(
-        div(
-          id = ns("download_options"),
-          hr(),
-          checkboxInput(
-            inputId = ns("download_inputs"),
-            label = "Download all user inputs",
-            value = FALSE
-          )
-        )
-      ),
-      conditionalPanel(
-        ns = ns,
-        condition = "input.download_inputs == true",
-        downloadModelUI(
-          id = ns("session_download"),
-          label = "Download Inputs"
-        )
-      )
+      downloadSessionUI(id)
     ),
     mainPanel(
       width = 10,
@@ -115,6 +97,9 @@ mapPanelServer <- function(id) {
       # Enable / disable actionButton
       observeEnableActionButton(input, image_list, questionnaire)
 
+      # setup download of a session
+      downloadSessionServer(input, output, session, uploaded_zip, upload_description)
+
       # Show plot and plot formatting options when button is clicked
       observeShowPlot(
         input = input,
@@ -153,20 +138,6 @@ mapPanelServer <- function(id) {
           ),
           ignoreInit = TRUE
         )
-
-      # Session DOWNLOAD ----
-      # export inputs and all files
-      downloadModelServer("session_download",
-                          dat = reactive(NULL),
-                          inputs = input,
-                          model = reactive(NULL),
-                          pathToOtherZip = uploaded_zip()[[1]],
-                          rPackageName = config()[["rPackageName"]],
-                          defaultFileName = config()[["defaultFileName"]],
-                          fileExtension = config()[["fileExtension"]],
-                          modelNotes = upload_description,
-                          triggerUpdate = reactive(TRUE),
-                          onlySettings = TRUE)
     }
   )
 }

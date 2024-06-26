@@ -27,11 +27,13 @@ fillVariableSelectionInputs <- function(input, session, image_list) {
 
   # fill variable input
   observe({
+    choices <- image_list()$Variable[image_list()$Group == input[["group_name-selectize"]]]
+
     updateSelectizeInput(
       session = session,
       inputId = "variable-selectize",
-      choices = image_list()$Variable[image_list()$Group == input[["group_name-selectize"]]],
-      selected = ""
+      choices = choices,
+      selected = validateSelected(input[["variable-selectize"]], choices = choices)
     )
   }) %>%
     bindEvent(input[["group_name-selectize"]],
@@ -41,12 +43,14 @@ fillVariableSelectionInputs <- function(input, session, image_list) {
 
   # fill measure input
   observe({
+    choices <- image_list()$Measure[image_list()$Group == input[["group_name-selectize"]] &
+      image_list()$Variable == input[["variable-selectize"]]]
+
     updateSelectizeInput(
       session = session,
       inputId = "measure-selectize",
-      choices = image_list()$Measure[image_list()$Group == input[["group_name-selectize"]] &
-        image_list()$Variable == input[["variable-selectize"]]],
-      selected = ""
+      choices = choices,
+      selected = validateSelected(input[["measure-selectize"]], choices = choices)
     )
   }) %>%
     bindEvent(input[["variable-selectize"]],
@@ -66,13 +70,15 @@ fillVariableSelectionInputs <- function(input, session, image_list) {
       session = session,
       inputId = "time-slider",
       choices = choices,
-      selected = choices[1]
+      selected = validateSelected(input[["time-slider"]], choices = choices, default = choices[1])
     )
     shinyWidgets::updateSliderTextInput(
       session = session,
       inputId = "time_range-slider",
       choices = choices,
-      selected = c(min(choices), max(choices))
+      selected = validateSelected(input[["time_range-slider"]],
+                                  choices = choices,
+                                  default = c(min(choices), max(choices)))
     )
   }) %>%
     bindEvent(input[["measure-selectize"]],
@@ -103,4 +109,12 @@ fillVariableSelectionInputs <- function(input, session, image_list) {
     bindEvent(input[["time_switch-buttons"]],
       ignoreInit = TRUE
     )
+}
+
+validateSelected <- function(selected, choices, default = "") {
+  if (!is.null(selected) && selected != "" && selected %in% choices) {
+    selected
+  } else {
+    default
+  }
 }
