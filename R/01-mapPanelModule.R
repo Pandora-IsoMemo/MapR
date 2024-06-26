@@ -81,9 +81,11 @@ mapPanelServer <- function(id) {
       image_list <- reactiveVal()
       questionnaire <- reactiveVal()
       table_data <- reactiveVal()
+      uploaded_inputs <- reactiveVal()
+      upload_description <- reactiveVal()
 
       # Load zip file
-      uploadedZip <- importDataServer("file_import",
+      uploaded_zip <- importDataServer("file_import",
         importType = "zip",
         defaultSource = config()[["defaultSource"]],
         ckanFileTypes = config()[["ckanFileTypes"]],
@@ -93,13 +95,17 @@ mapPanelServer <- function(id) {
       )
 
       # Show and hide inputs depending on image_list or questionnaire being available
-      observeShowAndHideInputs(
+      # extract image list and questionnaire from zip file if they exist
+      # extract inputs and description from zip file if they exist
+      observeUploadedZip(
         input = input,
         output = output,
         session = session,
-        uploadedZip = uploadedZip,
+        uploaded_zip = uploaded_zip,
         image_list = image_list,
         questionnaire = questionnaire,
+        uploaded_inputs = uploaded_inputs,
+        upload_description = upload_description,
         id = id
       )
 
@@ -148,19 +154,17 @@ mapPanelServer <- function(id) {
           ignoreInit = TRUE
         )
 
-      # Session DOWN- / UPLOAD ----
-      uploadedNotes <- reactiveVal(NULL)
-
+      # Session DOWNLOAD ----
       # export inputs and all files
       downloadModelServer("session_download",
                           dat = reactive(NULL),
                           inputs = input,
                           model = reactive(NULL),
-                          pathToOtherZip = uploadedZip()[[1]],
+                          pathToOtherZip = uploaded_zip()[[1]],
                           rPackageName = config()[["rPackageName"]],
                           defaultFileName = config()[["defaultFileName"]],
                           fileExtension = config()[["fileExtension"]],
-                          modelNotes = uploadedNotes,
+                          modelNotes = upload_description,
                           triggerUpdate = reactive(TRUE),
                           onlySettings = TRUE)
     }
