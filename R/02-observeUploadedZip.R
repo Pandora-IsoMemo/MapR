@@ -26,6 +26,7 @@ observeUploadedZip <- function(input,
                                id) {
   # load inputs depending on content of zip file
   observe({
+    logDebug("observeUploadedZip: Observe uploaded_zip triggered.")
     # reset plot and image list (also resets inputs)
     output[["mainplot-plot"]] <- NULL
     image_list(NULL)
@@ -59,6 +60,7 @@ observeUploadedZip <- function(input,
 
   observe({
     req(!is.null(uploaded_inputs()[["inputs"]]))
+    logDebug("observeUploadedZip: Send uploaded_inputs.")
     new_inputs <- uploaded_inputs()[["inputs"]]
 
     ## update inputs ----

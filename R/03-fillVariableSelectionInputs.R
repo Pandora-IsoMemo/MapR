@@ -1,6 +1,7 @@
 fillVariableSelectionInputs <- function(input, session, image_list) {
   # fill group input
   observe({
+    logDebug("fillVariableSelectionInputs: Observe image_list triggered.")
     choices <- unique(image_list()$Group)
     if (is.null(choices)) {
       choices <- ""
@@ -27,6 +28,7 @@ fillVariableSelectionInputs <- function(input, session, image_list) {
 
   # fill variable input
   observe({
+    logDebug('fillVariableSelectionInputs: Update input[["variable-selectize"]].')
     choices <- image_list()$Variable[image_list()$Group == input[["group_name-selectize"]]]
 
     updateSelectizeInput(
@@ -43,6 +45,7 @@ fillVariableSelectionInputs <- function(input, session, image_list) {
 
   # fill measure input
   observe({
+    logDebug('fillVariableSelectionInputs: Update input[["measure-selectize"]].')
     choices <- image_list()$Measure[image_list()$Group == input[["group_name-selectize"]] &
       image_list()$Variable == input[["variable-selectize"]]]
 
@@ -60,6 +63,7 @@ fillVariableSelectionInputs <- function(input, session, image_list) {
 
   # update time sliders
   observe({
+    logDebug('fillVariableSelectionInputs: Update time-sliders.')
     choices <- as.numeric(unlist(image_list()$x_display_value[image_list()$Group == input[["group_name-selectize"]] &
       image_list()$Variable == input[["variable-selectize"]] &
       image_list()$Measure == input[["measure-selectize"]]]))
@@ -88,6 +92,7 @@ fillVariableSelectionInputs <- function(input, session, image_list) {
 
   # update slider
   observe({
+    logDebug('fillVariableSelectionInputs: show/hide time-sliders.')
     if (input[["time_switch-buttons"]] == 1) {
       shinyjs::hide(id = "time_range-slider")
       shinyjs::show(
@@ -112,7 +117,11 @@ fillVariableSelectionInputs <- function(input, session, image_list) {
 }
 
 validateSelected <- function(selected, choices, default = "") {
-  if (!is.null(selected) && selected != "" && selected %in% choices) {
+  if (length(choices) == 0) {
+    return(choices)
+  }
+
+  if (!is.null(selected) && all(selected != "") && all(selected %in% choices)) {
     selected
   } else {
     default

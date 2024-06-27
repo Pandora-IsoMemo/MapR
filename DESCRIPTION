@@ -11,6 +11,7 @@ Imports:
     colourpicker,
     DataTools (>= 24.06.0),
     DT,
+    futile.logger,
     magrittr,
     pastclim,
     rjson,
