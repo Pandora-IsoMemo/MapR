@@ -2,14 +2,20 @@
 #'
 #' @param id id of module
 #' @param questions list of questions from json
-createQuestionnaireInputs <- function(id, questions) {
+#' @param questionnaire_inputs list of questionnaire inputs
+createQuestionnaireInputs <- function(id, questions, questionnaire_inputs) {
   ns <- NS(id)
   inputList <- tagList()
   for (i in seq_along(questions$Questions)) {
     if (questions$Questions[[i]]$Type == "multiple choice") {
       label <- questions$Questions[[i]]$Question
       choices <- questions$Questions[[i]]$Answers
-      selected <- questions$Questions[[i]]$Fill_Value
+      loaded_input <- questionnaire_inputs[grep(i, names(questionnaire_inputs), value = TRUE)]
+      if(!is.null(loaded_input) && length(loaded_input) > 0){
+        selected <- loaded_input
+      } else {
+        selected <- questions$Questions[[i]]$Fill_Value
+      }
       inputList[[i]] <- radioButtons(
         inputId = ns(paste0("question_", i)),
         choices = choices,
@@ -18,7 +24,12 @@ createQuestionnaireInputs <- function(id, questions) {
       )
     } else if (questions$Questions[[i]]$Type == "numeric") {
       label <- questions$Questions[[i]]$Question
-      value <- questions$Questions[[i]]$Fill_Value
+      loaded_input <- questionnaire_inputs[grep(i, names(questionnaire_inputs), value = TRUE)]
+      if(!is.null(loaded_input)){
+        value <- loaded_input
+      } else {
+        value <- questions$Questions[[i]]$Fill_Value
+      }
       inputList[[i]] <- numericInput(
         inputId = ns(paste0("question_", i)),
         label = label,
