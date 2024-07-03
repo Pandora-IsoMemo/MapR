@@ -35,11 +35,16 @@ observeUploadedZip <- function(input,
     datapath <- uploaded_zip()[[1]]
     utils::unzip(datapath, exdir = tempdir()) # extract zip file to tempdir
 
+    # extract inputs from zip file if they exist
+    upload_description(extractNotes(tempdir()))
+    uploaded_inputs(extractObjectFromFile(tempdir(), what = "inputs"))
+
     if ("questionnaire.json" %in% utils::unzip(datapath, list = TRUE)$Name) { # if questionnaire is present
       shinyjs::hide(id = "variable_selection_inputs") # hide variable selection inputs
       removeUI(selector = "#map_panel-questionnaire_inputs", immediate = TRUE) #  remove old questionnaire inputs
       questionnaire(rjson::fromJSON(file = paste0(tempdir(), "/questionnaire.json"))) # load new questionnaire
-      createQuestionnaireInputs(id, questionnaire()) # create new questionnaire inputs
+      questionnaire_inputs <- uploaded_inputs()[["inputs"]][grep("question_", names(uploaded_inputs()[["inputs"]]), value = TRUE)]
+      createQuestionnaireInputs(id, questionnaire(), questionnaire_inputs) # create new questionnaire inputs
     } else { # if no questionnaire is present
       image_list(convertImageListToDataFrame(file = paste0(tempdir(), "/image_list.json"))) # fill image list
       shinyjs::show(
@@ -51,10 +56,6 @@ observeUploadedZip <- function(input,
       removeUI(selector = "#map_panel-questionnaire_inputs", immediate = TRUE) #  remove old questionnaire inputs
       questionnaire(NULL) # reset questionnaire
     }
-
-    # extract inputs from zip file if they exist
-    upload_description(extractNotes(tempdir()))
-    uploaded_inputs(extractObjectFromFile(tempdir(), what = "inputs"))
 
   }) %>% bindEvent(uploaded_zip(), ignoreInit = TRUE)
 

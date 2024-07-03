@@ -92,7 +92,7 @@ mapPanelServer <- function(id) {
       )
 
       # Fill inputs based on uploaded image list (if image list is available)
-      fillVariableSelectionInputs(input, session, image_list)
+      fillVariableSelectionInputs(input, session, image_list, uploaded_inputs)
 
       # Enable / disable actionButton
       observeEnableActionButton(input, image_list, questionnaire)

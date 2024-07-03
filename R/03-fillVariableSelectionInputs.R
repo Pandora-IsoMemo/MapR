@@ -1,4 +1,4 @@
-fillVariableSelectionInputs <- function(input, session, image_list) {
+fillVariableSelectionInputs <- function(input, session, image_list, uploaded_inputs) {
   # fill group input
   observe({
     logDebug("fillVariableSelectionInputs: Observe image_list triggered.")
@@ -14,14 +14,14 @@ fillVariableSelectionInputs <- function(input, session, image_list) {
       session = session,
       inputId = "group_name-selectize",
       choices = choices,
-      selected = "",
+      selected = uploaded_inputs()[["inputs"]]$`group_name-selectize`,
       options = list(
         maxItems = 1,
         placeholder = placeholder
       )
     )
   }) %>%
-    bindEvent(image_list(),
+    bindEvent(c(image_list(), uploaded_inputs()),
       ignoreNULL = FALSE,
       ignoreInit = TRUE
     )
@@ -35,7 +35,7 @@ fillVariableSelectionInputs <- function(input, session, image_list) {
       session = session,
       inputId = "variable-selectize",
       choices = choices,
-      selected = validateSelected(input[["variable-selectize"]], choices = choices)
+      selected = uploaded_inputs()[["inputs"]]$`variable-selectize`
     )
   }) %>%
     bindEvent(input[["group_name-selectize"]],
@@ -48,12 +48,11 @@ fillVariableSelectionInputs <- function(input, session, image_list) {
     logDebug('fillVariableSelectionInputs: Update input[["measure-selectize"]].')
     choices <- image_list()$Measure[image_list()$Group == input[["group_name-selectize"]] &
       image_list()$Variable == input[["variable-selectize"]]]
-
     updateSelectizeInput(
       session = session,
       inputId = "measure-selectize",
       choices = choices,
-      selected = validateSelected(input[["measure-selectize"]], choices = choices)
+      selected = uploaded_inputs()[["inputs"]]$`measure-selectize`
     )
   }) %>%
     bindEvent(input[["variable-selectize"]],
@@ -74,15 +73,13 @@ fillVariableSelectionInputs <- function(input, session, image_list) {
       session = session,
       inputId = "time-slider",
       choices = choices,
-      selected = validateSelected(input[["time-slider"]], choices = choices, default = choices[1])
+      selected = uploaded_inputs()[["inputs"]]$`time-slider`
     )
     shinyWidgets::updateSliderTextInput(
       session = session,
       inputId = "time_range-slider",
       choices = choices,
-      selected = validateSelected(input[["time_range-slider"]],
-                                  choices = choices,
-                                  default = c(min(choices), max(choices)))
+      selected = uploaded_inputs()[["inputs"]]$`time_range-slider`
     )
   }) %>%
     bindEvent(input[["measure-selectize"]],
@@ -114,16 +111,4 @@ fillVariableSelectionInputs <- function(input, session, image_list) {
     bindEvent(input[["time_switch-buttons"]],
       ignoreInit = TRUE
     )
-}
-
-validateSelected <- function(selected, choices, default = "") {
-  if (length(choices) == 0) {
-    return(choices)
-  }
-
-  if (!is.null(selected) && all(selected != "") && all(selected %in% choices)) {
-    selected
-  } else {
-    default
-  }
 }
