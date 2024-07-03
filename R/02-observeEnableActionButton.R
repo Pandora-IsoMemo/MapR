@@ -6,6 +6,13 @@
 observeEnableActionButton <- function(input, image_list, questionnaire) {
   observe({
     if (!is.null(image_list())) { # in case image_list is available
+      shinyjs::show(
+        id = "download_options",
+        anim = TRUE,
+        animType = "fade",
+        time = 1
+      )
+
       if (input[["time_switch-buttons"]] == 1) {
         shinyjs::hide(id = "display_table-button")
         shinyjs::hide(id = "latitude")

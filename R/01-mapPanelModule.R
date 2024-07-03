@@ -30,6 +30,7 @@ mapPanelUI <- function(id) {
         )
       ),
       textFormatUI(ns("title"), label = "Title"),
+      downloadSessionUI(id)
     ),
     mainPanel(
       width = 10,
@@ -62,9 +63,11 @@ mapPanelServer <- function(id) {
       image_list <- reactiveVal()
       questionnaire <- reactiveVal()
       table_data <- reactiveVal()
+      uploaded_inputs <- reactiveVal()
+      upload_description <- reactiveVal()
 
       # Load zip file
-      uploadedZip <- importDataServer("file_import",
+      uploaded_zip <- importDataServer("file_import",
         importType = "zip",
         defaultSource = config()[["defaultSource"]],
         ckanFileTypes = config()[["ckanFileTypes"]],
@@ -74,21 +77,28 @@ mapPanelServer <- function(id) {
       )
 
       # Show and hide inputs depending on image_list or questionnaire being available
-      observeShowAndHideInputs(
+      # extract image list and questionnaire from zip file if they exist
+      # extract inputs and description from zip file if they exist
+      observeUploadedZip(
         input = input,
         output = output,
         session = session,
-        uploadedZip = uploadedZip,
+        uploaded_zip = uploaded_zip,
         image_list = image_list,
         questionnaire = questionnaire,
+        uploaded_inputs = uploaded_inputs,
+        upload_description = upload_description,
         id = id
       )
 
       # Fill inputs based on uploaded image list (if image list is available)
-      fillVariableSelectionInputs(input, session, image_list)
+      fillVariableSelectionInputs(input, session, image_list, uploaded_inputs)
 
       # Enable / disable actionButton
       observeEnableActionButton(input, image_list, questionnaire)
+
+      # setup download of a session
+      downloadSessionServer(input, output, session, uploaded_zip, upload_description)
 
       # Show plot and plot formatting options when button is clicked
       observeShowPlot(
