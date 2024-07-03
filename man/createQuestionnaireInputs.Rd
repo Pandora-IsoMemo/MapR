@@ -4,12 +4,14 @@
 \alias{createQuestionnaireInputs}
 \title{Create Inputs for Questionnaire}
 \usage{
-createQuestionnaireInputs(id, questions)
+createQuestionnaireInputs(id, questions, questionnaire_inputs)
 }
 \arguments{
 \item{id}{id of module}
 
 \item{questions}{list of questions from json}
+
+\item{questionnaire_inputs}{list of questionnaire inputs}
 }
 \description{
 Create Inputs for Questionnaire
