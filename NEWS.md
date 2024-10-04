@@ -1,3 +1,24 @@
+# MapR 24.6.0
+
+## New Features
+- option to download all user inputs together with the content of the zip files of all imported
+  figures (#29)
+
+# MapR 24.3.0
+
+## Updates
+- applying exportData module from shinyTools package, removing the code from this package
+
+# MapR 24.2.1
+
+## New Features
+- display and download of time plot data
+
+# MapR 24.2.0
+
+## New Features
+- adds header with Pandora, IsoMemo and help links
+
 # MapR 24.1.2
 
 ## Bug Fixes

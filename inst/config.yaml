@@ -3,5 +3,6 @@ defaultSource: "file"           # for import of data
 ckanFileTypes:
   - "zipm"
   - "zip"
+defaultFileName: "mapR_session" # for download of user inputs
 fileExtension: "zipm"   # for import of models
 rPackageName: "MapR"
