@@ -9,7 +9,7 @@ mapPanelUI <- function(id) {
   sidebarLayout(
     sidebarPanel(
       width = 2,
-      importDataUI(ns("file_import"), label = "Import ZIP file"),
+      importDataUI(ns("file_import"), label = "Load MapR file"),
       createVariableSelectionInputs(id),
       br(),
       fluidRow(
@@ -109,15 +109,19 @@ mapPanelServer <- function(id) {
         questionnaire = questionnaire
       )
 
-      observeShowTable(input = input,
-                       output = output,
-                       session = session,
-                       image_list = image_list,
-                       table_data = table_data)
+      observeShowTable(
+        input = input,
+        output = output,
+        session = session,
+        image_list = image_list,
+        table_data = table_data
+      )
 
       dataExportServer(
         id = "download",
-        dataFun = reactive({ function() table_data() }),
+        dataFun = reactive({
+          function() table_data()
+        }),
         filename = "data"
       )
 
