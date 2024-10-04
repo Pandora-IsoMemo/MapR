@@ -11,12 +11,14 @@
 <url><loc>https://pandora-isomemo.github.io/MapR/reference/convertImageListToDataFrame.html</loc></url>
 <url><loc>https://pandora-isomemo.github.io/MapR/reference/createQuestionnaireInputs.html</loc></url>
 <url><loc>https://pandora-isomemo.github.io/MapR/reference/createVariableSelectionInputs.html</loc></url>
+<url><loc>https://pandora-isomemo.github.io/MapR/reference/downloadSessionUI.html</loc></url>
 <url><loc>https://pandora-isomemo.github.io/MapR/reference/index.html</loc></url>
 <url><loc>https://pandora-isomemo.github.io/MapR/reference/mapPanelServer.html</loc></url>
 <url><loc>https://pandora-isomemo.github.io/MapR/reference/mapPanelUI.html</loc></url>
 <url><loc>https://pandora-isomemo.github.io/MapR/reference/observeEnableActionButton.html</loc></url>
-<url><loc>https://pandora-isomemo.github.io/MapR/reference/observeShowAndHideInputs.html</loc></url>
 <url><loc>https://pandora-isomemo.github.io/MapR/reference/observeShowPlot.html</loc></url>
+<url><loc>https://pandora-isomemo.github.io/MapR/reference/observeShowTable.html</loc></url>
+<url><loc>https://pandora-isomemo.github.io/MapR/reference/observeUploadedZip.html</loc></url>
 <url><loc>https://pandora-isomemo.github.io/MapR/reference/pipe.html</loc></url>
 <url><loc>https://pandora-isomemo.github.io/MapR/reference/plotServer.html</loc></url>
 <url><loc>https://pandora-isomemo.github.io/MapR/reference/plotUI.html</loc></url>
@@ -26,6 +28,8 @@
 <url><loc>https://pandora-isomemo.github.io/MapR/reference/selectizeInputUI.html</loc></url>
 <url><loc>https://pandora-isomemo.github.io/MapR/reference/sliderInputUI.html</loc></url>
 <url><loc>https://pandora-isomemo.github.io/MapR/reference/startApplication.html</loc></url>
+<url><loc>https://pandora-isomemo.github.io/MapR/reference/tableServer.html</loc></url>
+<url><loc>https://pandora-isomemo.github.io/MapR/reference/tableUI.html</loc></url>
 <url><loc>https://pandora-isomemo.github.io/MapR/reference/textFormatUI.html</loc></url>
 </urlset>
 
