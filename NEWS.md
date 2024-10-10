@@ -1,3 +1,9 @@
+# MapR 24.10.0
+
+## Updates
+- mapr file extension is used instead of zipm
+- labels for inputs have been updated
+
 # MapR 24.6.0
 
 ## New Features
