@@ -11,13 +11,15 @@ tableUI <- function(id) {
 #'
 #' @param id id of module
 #' @param df data frame to be displayed in table
-tableServer <- function(id, df) {
+#' @param title_format reactive list with title text and format arguments
+tableServer <- function(id, df, title_format) {
   moduleServer(
     id,
     function(input, output, session) {
       output$table <- DT::renderDataTable({
         DT::datatable(df,
           rownames = FALSE,
+          caption = htmltools::tags$caption(formatCaption(title_format)),
           # escape = FALSE,
           # filter = "top",
           style = "bootstrap",
@@ -38,10 +40,10 @@ tableServer <- function(id, df) {
 #' @param session session from server function
 #' @param image_list reactive image list
 #' @param table_data reactive table data
-observeShowTable <- function(input, output, session, image_list, table_data) {
+#' @param title_format reactive list with title text and format arguments
+observeShowTable <- function(input, output, session, image_list, table_data, title_format) {
   observe({
-    shinyjs::hide(id = "title-options")
-    shinyjs::hide(id = "plot_title")
+    shinyjs::show(id = "title-options")
     shinyjs::hide(id = "mainplot-plot")
     shinyjs::show(id = "maintable-table")
     shinyjs::show(
@@ -54,7 +56,7 @@ observeShowTable <- function(input, output, session, image_list, table_data) {
     locations <- data.frame(latitude = input[["latitude"]], longitude = input[["longitude"]])
     path <- paste0(tempdir(), "/data/", imageInfos$address)
     if (imageInfos$file_type[[1]] != "nc") {
-      shinyjs::alert("file_type specified in json must be nc for time plot.")
+      shinyjs::alert("file_type specified in json must be nc for 'Time data'.")
     } else {
       df <- pastclim::location_series(
         x = locations,
@@ -69,11 +71,25 @@ observeShowTable <- function(input, output, session, image_list, table_data) {
       table_data(df)
       tableServer(
         id = "maintable",
-        df = df
+        df = df,
+        title_format = title_format
       )
     }
   }) %>%
     bindEvent(input[["display_table-button"]],
       ignoreInit = TRUE
     )
+}
+
+#' Create a caption for a table from a title object
+#'
+#' @param title_format named list with title text and format arguments
+#'
+#' @return (HTML) caption for a table
+formatCaption <- function(title_format) {
+  text <- title_format[["text"]]
+  col <- title_format[["color"]]
+  fontsize <- paste0(title_format[["size"]], "px")
+  style <- paste("font-size: ", fontsize, ";", "color: ", col, ";", sep = "")
+  HTML(paste("<span style='", style, "'>", text, "</span>"))
 }
