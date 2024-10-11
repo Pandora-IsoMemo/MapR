@@ -36,13 +36,7 @@ mapPanelUI <- function(id) {
       width = 10,
       fluidRow(
         column(12,
-          align = "center",
-          uiOutput(outputId = ns("plot_title"))
-        )
-      ),
-      fluidRow(
-        column(12,
-          align = "center",
+          align = "left",
           plotUI(id = ns("mainplot")),
           tableUI(id = ns("maintable"))
         )
@@ -100,13 +94,22 @@ mapPanelServer <- function(id) {
       # setup download of a session
       downloadSessionServer(input, output, session, uploaded_zip, upload_description)
 
+      title_format <- reactiveValues()
+
+      observe({
+        title_format[["text"]] <- input[["title-text"]]
+        title_format[["color"]] <- input[["title-color"]]
+        title_format[["size"]] <- input[["title-fontsize"]]
+      })
+
       # Show plot and plot formatting options when button is clicked
       observeShowPlot(
         input = input,
         output = output,
         session = session,
         image_list = image_list,
-        questionnaire = questionnaire
+        questionnaire = questionnaire,
+        title_format = title_format
       )
 
       observeShowTable(
@@ -114,7 +117,8 @@ mapPanelServer <- function(id) {
         output = output,
         session = session,
         image_list = image_list,
-        table_data = table_data
+        table_data = table_data,
+        title_format = title_format
       )
 
       dataExportServer(
@@ -124,24 +128,6 @@ mapPanelServer <- function(id) {
         }),
         filename = "data"
       )
-
-      # Plot Title
-      output$plot_title <- renderUI({
-        text <- input[["title-text"]]
-        col <- input[["title-color"]]
-        fontsize <- paste0(input[["title-fontsize"]], "px")
-        style <- paste("font-size: ", fontsize, ";", "color: ", col, ";", sep = "")
-        HTML(paste("<span style='", style, "'>", text, "</span>"))
-      }) %>%
-        bindEvent(
-          c(
-            input[["display_plot-button"]],
-            input[["title-text"]],
-            input[["title-fontsize"]],
-            input[["title-color"]]
-          ),
-          ignoreInit = TRUE
-        )
     }
   )
 }

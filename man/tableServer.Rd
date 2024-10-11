@@ -4,12 +4,14 @@
 \alias{tableServer}
 \title{Server function of table module}
 \usage{
-tableServer(id, df)
+tableServer(id, df, title_format)
 }
 \arguments{
 \item{id}{id of module}
 
 \item{df}{data frame to be displayed in table}
+
+\item{title_format}{reactive list with title text and format arguments}
 }
 \description{
 Server function of table module

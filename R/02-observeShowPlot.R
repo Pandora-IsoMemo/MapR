@@ -5,10 +5,10 @@
 #' @param session session from server function
 #' @param image_list reactive image list
 #' @param questionnaire reactive questionnaire
-observeShowPlot <- function(input, output, session, image_list, questionnaire) {
+#' @param title_format reactive list with title text and format arguments
+observeShowPlot <- function(input, output, session, image_list, questionnaire, title_format) {
   observe({
     shinyjs::show(id = "title-options", anim = TRUE)
-    shinyjs::show(id = "plot_title", anim = TRUE)
     shinyjs::hide(id = "maintable-table")
     shinyjs::show(id = "mainplot-plot")
 
@@ -24,7 +24,8 @@ observeShowPlot <- function(input, output, session, image_list, questionnaire) {
         path = paste0(tempdir(), "/data/", imageInfos$address),
         file_type = imageInfos$file_type,
         variable = imageInfos$variable,
-        time = imageInfos$time
+        time = imageInfos$time,
+        title_format = title_format
       )
 
       updateTextInput(

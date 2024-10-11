@@ -12,6 +12,8 @@ Imports:
     DataTools (>= 24.06.0),
     DT,
     futile.logger,
+    graphics,
+    magick,
     magrittr,
     pastclim,
     rjson,

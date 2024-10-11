@@ -16,6 +16,8 @@
 #' @importFrom rjson fromJSON
 #' @importFrom DataTools downloadModelServer downloadModelUI extractNotes extractObjectFromFile
 #'  importDataUI importDataServer importOptions
+#' @importFrom graphics title
+#' @importFrom magick image_annotate image_read image_write
 #' @importFrom shinyTools dataExportButton dataExportServer headerButtonsUI includeShinyToolsCSS
 #' @importFrom yaml read_yaml
 

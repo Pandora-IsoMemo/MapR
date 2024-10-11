@@ -4,7 +4,14 @@
 \alias{observeShowPlot}
 \title{Observer to show plot when display button is clicked}
 \usage{
-observeShowPlot(input, output, session, image_list, questionnaire)
+observeShowPlot(
+  input,
+  output,
+  session,
+  image_list,
+  questionnaire,
+  title_format
+)
 }
 \arguments{
 \item{input}{input object from server function}
@@ -16,6 +23,8 @@ observeShowPlot(input, output, session, image_list, questionnaire)
 \item{image_list}{reactive image list}
 
 \item{questionnaire}{reactive questionnaire}
+
+\item{title_format}{reactive list with title text and format arguments}
 }
 \description{
 Observer to show plot when display button is clicked
