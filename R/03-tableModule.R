@@ -19,7 +19,7 @@ tableServer <- function(id, df, title_format) {
       output$table <- DT::renderDataTable({
         DT::datatable(df,
           rownames = FALSE,
-          caption = htmltools::tags$caption(formatCaption(title_format)),
+          caption = formatCaption(title_format),
           # escape = FALSE,
           # filter = "top",
           style = "bootstrap",
