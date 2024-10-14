@@ -9,7 +9,7 @@ createVariableSelectionInputs <- function(id) {
       id = ns("variable_selection_inputs"),
       selectizeInputUI(
         id = ns("group_name"),
-        label = "Group Name",
+        label = "Main selection",
         choices = NULL
       ),
       selectizeInputUI(
@@ -19,7 +19,7 @@ createVariableSelectionInputs <- function(id) {
       ),
       selectizeInputUI(
         id = ns("measure"),
-        label = "Measure",
+        label = "Parameter",
         choices = NULL
       ),
       br(),

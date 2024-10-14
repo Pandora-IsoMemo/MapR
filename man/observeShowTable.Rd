@@ -4,7 +4,7 @@
 \alias{observeShowTable}
 \title{Observer to show table when display button is clicked}
 \usage{
-observeShowTable(input, output, session, image_list, table_data)
+observeShowTable(input, output, session, image_list, table_data, title_format)
 }
 \arguments{
 \item{input}{input object from server function}
@@ -16,6 +16,8 @@ observeShowTable(input, output, session, image_list, table_data)
 \item{image_list}{reactive image list}
 
 \item{table_data}{reactive table data}
+
+\item{title_format}{reactive list with title text and format arguments}
 }
 \description{
 Observer to show table when display button is clicked
