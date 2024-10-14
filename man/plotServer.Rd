@@ -4,7 +4,7 @@
 \alias{plotServer}
 \title{Server function of plot module}
 \usage{
-plotServer(id, path, file_type, variable = NULL, time = NULL)
+plotServer(id, path, file_type, title_format, variable = NULL, time = NULL)
 }
 \arguments{
 \item{id}{id of the module}
@@ -12,6 +12,8 @@ plotServer(id, path, file_type, variable = NULL, time = NULL)
 \item{path}{path to the file}
 
 \item{file_type}{file type of file}
+
+\item{title_format}{reactive list with title text and format arguments}
 
 \item{variable}{variable from user selection}
 

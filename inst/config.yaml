@@ -1,8 +1,8 @@
 defaultSource: "file"           # for import of data
 # file types that are allowed for import from Pandora ("ckan")
 ckanFileTypes:
-  - "zipm"
+  - "mapr"
   - "zip"
 defaultFileName: "mapR_session" # for download of user inputs
-fileExtension: "zipm"   # for import of models
+fileExtension: "mapr"   # for import of models
 rPackageName: "MapR"
