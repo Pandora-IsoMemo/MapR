@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MapR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">24.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">24.10.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +42,14 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">observeShowPlot</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span>, <span class="va">image_list</span>, <span class="va">questionnaire</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">observeShowPlot</span><span class="op">(</span></span>
+<span>  <span class="va">input</span>,</span>
+<span>  <span class="va">output</span>,</span>
+<span>  <span class="va">session</span>,</span>
+<span>  <span class="va">image_list</span>,</span>
+<span>  <span class="va">questionnaire</span>,</span>
+<span>  <span class="va">title_format</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -67,6 +74,10 @@
 
 <dt id="arg-questionnaire">questionnaire<a class="anchor" aria-label="anchor" href="#arg-questionnaire"></a></dt>
 <dd><p>reactive questionnaire</p></dd>
+
+
+<dt id="arg-title-format">title_format<a class="anchor" aria-label="anchor" href="#arg-title-format"></a></dt>
+<dd><p>reactive list with title text and format arguments</p></dd>
 
 </dl></div>
 
