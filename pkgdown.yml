@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   how-to-use-MapR: how-to-use-MapR.html
-last_built: 2024-10-14T11:41Z
+last_built: 2025-01-07T12:38Z
 urls:
   reference: https://pandora-isomemo.github.io/MapR/reference
   article: https://pandora-isomemo.github.io/MapR/articles
