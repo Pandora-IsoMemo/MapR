@@ -18,3 +18,5 @@
 ^docs$
 ^pkgdown$
 ^\.github$
+^inst/app/exampleZip/
+^inst/app/dataQueries/
