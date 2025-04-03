@@ -9,7 +9,7 @@ mapPanelUI <- function(id) {
   sidebarLayout(
     sidebarPanel(
       width = 2,
-      importDataUI(ns("file_import"), label = "Load MapR file"),
+      importUI(ns("file_import"), label = "Load MapR file"),
       createVariableSelectionInputs(id),
       br(),
       fluidRow(
@@ -61,7 +61,7 @@ mapPanelServer <- function(id) {
       upload_description <- reactiveVal()
 
       # Load zip file
-      uploaded_zip <- importDataServer("file_import",
+      uploaded_zip <- importServer("file_import",
         importType = "zip",
         defaultSource = config()[["defaultSource"]],
         ckanFileTypes = config()[["ckanFileTypes"]],

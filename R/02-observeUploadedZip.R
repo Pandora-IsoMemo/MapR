@@ -37,7 +37,7 @@ observeUploadedZip <- function(input,
 
     # extract inputs from zip file if they exist
     upload_description(extractNotes(tempdir()))
-    uploaded_inputs(extractObjectFromFile(tempdir(), what = "inputs"))
+    uploaded_inputs(extractObjectFromFile(tempdir()))
 
     if ("questionnaire.json" %in% utils::unzip(datapath, list = TRUE)$Name) { # if questionnaire is present
       shinyjs::hide(id = "variable_selection_inputs") # hide variable selection inputs

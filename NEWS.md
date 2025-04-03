@@ -1,3 +1,9 @@
+# MapR 25.04.0
+
+## Updates
+- reduce package size by adding example files to the `.Rbuildignore`
+- remove warning from import module 
+
 # MapR 24.10.0
 
 ## Updates

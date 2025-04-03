@@ -15,7 +15,7 @@
 #' @rawNamespace import(shiny)
 #' @importFrom rjson fromJSON
 #' @importFrom DataTools downloadModelServer downloadModelUI extractNotes extractObjectFromFile
-#'  importDataUI importDataServer importOptions
+#'  importUI importServer importOptions
 #' @importFrom graphics title
 #' @importFrom magick image_annotate image_read image_write
 #' @importFrom shinyTools dataExportButton dataExportServer headerButtonsUI includeShinyToolsCSS
