@@ -1,0 +1,56 @@
+# Package index
+
+## All functions
+
+- [`actionButtonUI()`](https://pandora-isomemo.github.io/MapR/reference/actionButtonUI.md)
+  : UI function of actionButton
+- [`addTitleToPNG()`](https://pandora-isomemo.github.io/MapR/reference/addTitleToPNG.md)
+  : Add title to PNG image
+- [`config()`](https://pandora-isomemo.github.io/MapR/reference/config.md)
+  : Config
+- [`convertImageListToDataFrame()`](https://pandora-isomemo.github.io/MapR/reference/convertImageListToDataFrame.md)
+  : Reads image list from file and converts it into the needed data
+  frame format
+- [`createQuestionnaireInputs()`](https://pandora-isomemo.github.io/MapR/reference/createQuestionnaireInputs.md)
+  : Create Inputs for Questionnaire
+- [`createVariableSelectionInputs()`](https://pandora-isomemo.github.io/MapR/reference/createVariableSelectionInputs.md)
+  : Create Inputs for Variable Selection
+- [`downloadSessionUI()`](https://pandora-isomemo.github.io/MapR/reference/downloadSessionUI.md)
+  : Create Inputs for Variable Selection
+- [`formatCaption()`](https://pandora-isomemo.github.io/MapR/reference/formatCaption.md)
+  : Create a caption for a table from a title object
+- [`mapPanelServer()`](https://pandora-isomemo.github.io/MapR/reference/mapPanelServer.md)
+  : Server function of mapPanel module
+- [`mapPanelUI()`](https://pandora-isomemo.github.io/MapR/reference/mapPanelUI.md)
+  : UI function of mapPanel module
+- [`observeEnableActionButton()`](https://pandora-isomemo.github.io/MapR/reference/observeEnableActionButton.md)
+  : Enables or disables the action button depending on the availability
+  of the input variables
+- [`observeShowPlot()`](https://pandora-isomemo.github.io/MapR/reference/observeShowPlot.md)
+  : Observer to show plot when display button is clicked
+- [`observeShowTable()`](https://pandora-isomemo.github.io/MapR/reference/observeShowTable.md)
+  : Observer to show table when display button is clicked
+- [`observeUploadedZip()`](https://pandora-isomemo.github.io/MapR/reference/observeUploadedZip.md)
+  : Observer for zip upload
+- [`plotServer()`](https://pandora-isomemo.github.io/MapR/reference/plotServer.md)
+  : Server function of plot module
+- [`plotUI()`](https://pandora-isomemo.github.io/MapR/reference/plotUI.md)
+  : UI function of plot module
+- [`prepareImageListImage()`](https://pandora-isomemo.github.io/MapR/reference/prepareImageListImage.md)
+  : Prepare infos for image from image list
+- [`prepareQuestionnaireImage()`](https://pandora-isomemo.github.io/MapR/reference/prepareQuestionnaireImage.md)
+  : Prepare infos for image from questionnaire
+- [`radioButtonsUI()`](https://pandora-isomemo.github.io/MapR/reference/radioButtonsUI.md)
+  : UI function of radioButtons
+- [`selectizeInputUI()`](https://pandora-isomemo.github.io/MapR/reference/selectizeInputUI.md)
+  : UI function of selectizeInput
+- [`sliderInputUI()`](https://pandora-isomemo.github.io/MapR/reference/sliderInputUI.md)
+  : UI function of sliderInput
+- [`startApplication()`](https://pandora-isomemo.github.io/MapR/reference/startApplication.md)
+  : Start Application
+- [`tableServer()`](https://pandora-isomemo.github.io/MapR/reference/tableServer.md)
+  : Server function of table module
+- [`tableUI()`](https://pandora-isomemo.github.io/MapR/reference/tableUI.md)
+  : UI function of table module
+- [`textFormatUI()`](https://pandora-isomemo.github.io/MapR/reference/textFormatUI.md)
+  : UI function of textFormat module
