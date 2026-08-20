@@ -1,5 +1,12 @@
 # Changelog
 
+## MapR 26.08.0
+
+### Updates
+
+- require most recent DataTools version
+- updated base image to R 4.4.3
+
 ## MapR 25.04.0
 
 ### Updates
