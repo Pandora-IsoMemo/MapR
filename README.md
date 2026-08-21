@@ -2,6 +2,8 @@
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/Pandora-IsoMemo/MapR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Pandora-IsoMemo/MapR/actions/workflows/R-CMD-check.yaml)
+[![pkgdown](https://github.com/Pandora-IsoMemo/MapR/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/Pandora-IsoMemo/MapR/actions/workflows/pkgdown.yaml)
+[![docker-publish](https://github.com/Pandora-IsoMemo/MapR/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/Pandora-IsoMemo/MapR/actions/workflows/docker-publish.yml)
 <!-- badges: end -->
 
 An App to display temporal and temperature graphical files for Isomemo.
@@ -30,3 +32,28 @@ the main branch is build automatically via github action.
 devtools::document() # or CTRL + SHIFT + D in RStudio
 devtools::build_site()
 ```
+
+When testing with a local docker container, please make sure to rebuild the docker image after changes in the R code or dependencies. You can do this from the root of the repository via:
+
+```bash
+docker build -t mapr-app:latest .
+```
+
+or for a full rebuild without cache:
+
+```bash
+docker build --no-cache -t mapr-app:latest .
+```
+
+
+After that, start the container as usual via:
+
+```bash
+docker run -p 3838:3838 mapr-app:latest
+```
+
+and access the app in your browser at `http://localhost:3838/`. Stop the container with `CTRL + C` in the terminal.
+
+**Optional:**
+
+Add `-it` for interactive mode, or `--rm` to remove the container after stopping.
