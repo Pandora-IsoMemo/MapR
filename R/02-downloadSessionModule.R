@@ -20,7 +20,7 @@ downloadSessionUI <- function(id) {
       condition = "input.download_inputs == true",
       downloadModelUI(
         id = ns("session_download"),
-        label = "Download Inputs"
+        label = "Download Session"
       )
     )
   )

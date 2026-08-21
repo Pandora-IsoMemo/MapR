@@ -1,4 +1,5 @@
 library(shiny)
+library(MapR)
 
 tagList(
   navbarPage(
@@ -10,7 +11,7 @@ tagList(
     id = "tab",
     tabPanel(
       title = "Map",
-      mapPanelUI(id = "map_panel")
+      MapR::mapPanelUI(id = "map_panel")
     )
   ),
   shinyTools::headerButtonsUI(id = "header", help_link = "https://pandora-isomemo.github.io/MapR/articles/how-to-use-MapR.html"),
