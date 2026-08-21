@@ -1,3 +1,12 @@
+# MapR 26.08.1
+
+## Updates
+- Added testthat coverage for zip upload behavior (inputs/notes import, image list creation, questionnaire loading).
+- Updated docs/ignore files.
+
+## Bug Fixes
+- Fixed import by Updating `observeUploadedZip()` to use `DataTools::import_bundle_zip()` and model extract helpers instead of direct `unzip` and legacy extract functions.
+
 # MapR 26.08.0
 
 ## Updates
